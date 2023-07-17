@@ -2,7 +2,7 @@ import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/publi
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit'
 import { redirect } from '@sveltejs/kit'
 
-export const handle = async ({ url, event, resolve }) => {
+export const handle = async ({ event, resolve }) => {
     event.locals.sb = createSupabaseServerClient({
         supabaseUrl: PUBLIC_SUPABASE_URL,
         supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
@@ -16,14 +16,19 @@ export const handle = async ({ url, event, resolve }) => {
         return session
     }
 
-    const haveSession = await event.locals.getSession()
-
-    if (haveSession) {
-        event.locals.userID = haveSession.user.id
+    let userData
+    try {
+        const userDataCookie = event.cookies.get('user_data')
+        userData = JSON.parse(userDataCookie)
+        event.locals.userData = userData;
+    } catch (err) {
+        console.log(err);
+        event.locals.userData = null
     }
+    
 
     if (event.url.pathname.startsWith('/dashboard')) {
-        if (!haveSession) {
+        if (!userData) {
             throw redirect('301', '/login')
         }
     }
@@ -33,4 +38,11 @@ export const handle = async ({ url, event, resolve }) => {
             return name ==='content-range'
         },
     })
+}
+
+export function handleError({ event, error }) { 
+    console.log(`--error--\n\n${error}\n\n--error--`);
+    return {
+        message: error.message,
+    }
 }

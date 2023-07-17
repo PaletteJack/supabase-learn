@@ -1,5 +1,11 @@
 import { adminAuthClient } from "$lib/server/supabase-admin.js"
-import { fail } from "@sveltejs/kit";
+import { fail, redirect, error } from "@sveltejs/kit";
+
+export const load= async ({ locals: { userData } }) => {
+    if (!userData.site_admin) {
+        throw error(401, {message: "You do not have access to this page"})
+    }
+}
 
 export const actions = {
     createUser: async ({ request }) => {
@@ -9,7 +15,6 @@ export const actions = {
             email: body.email,
             password: body.password,
             email_confirm: true,
-            user_metadata: {name: `${body.firstName} ${body.lastName}`}
         })
 
         if (data) {

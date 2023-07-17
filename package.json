@@ -20,6 +20,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@floating-ui/dom": "^1.4.5",
     "@supabase/auth-helpers-sveltekit": "^0.10.1",
     "@supabase/supabase-js": "^2.26.0",
     "papaparse": "^5.4.1"

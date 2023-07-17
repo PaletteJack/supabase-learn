@@ -1,7 +1,7 @@
 <script>
     import Papa from 'papaparse';
     import { TabGroup, Tab } from "@skeletonlabs/skeleton"
-    import Eye from '$lib/components/Eye.svelte';
+    import Eye from '$lib/svgs/Eye.svelte';
     let tabSet = 0;
     let tmpData = [];
     let haveData = false;
