@@ -3,6 +3,37 @@ import { error } from '@sveltejs/kit'
 export const load = async ({ params, locals: { sb, userData } }) => {
     const classID = await Number(params.class);
     const userRole = userData.role
+    const date = new Date().toLocaleDateString();
+
+    async function getJournal() {
+        let { data: journal, error } = await sb
+            .from('journals')
+            .select('*')
+            .eq('class', classID)
+            .eq('owner', userData.id)
+            .eq('entry_date', date)
+            .single();
+        
+        if (!journal && !error) {
+            ({ data: journal, error } = await sb
+                .from('journals')
+                .insert([{ 
+                    owner: userData.id, 
+                    entry_date: date, 
+                    class: classID,
+                    body: '',
+                    is_editable: true,
+                }])
+                .single());
+        }
+
+        if (error) {
+            console.error('Error getting or creating journal entry: ', error);
+            return
+        }
+
+        return journal;
+    }
 
     async function getResourceCards() {
         const { data, error } = await sb.from('resource_cards').select('*').eq('classroom', classID)
@@ -56,7 +87,8 @@ export const load = async ({ params, locals: { sb, userData } }) => {
                     classroom,
                     userData: userData,
                     streamed: {
-                        cards: getResourceCards()
+                        cards: getResourceCards(),
+                        journal: getJournal()
                     }
                 }
             }

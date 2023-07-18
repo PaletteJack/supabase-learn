@@ -3,6 +3,7 @@ import { redirect, fail } from '@sveltejs/kit';
 export const POST = async ({ cookies, locals: { sb }}) => {
     const { error } = await sb.auth.signOut();
     cookies.set('user_data', '', { maxAge: 0})
+    cookies.set('sb-epalnbncirlkzxastmpe-auth-token', '', {maxAge: 0})
 
     if (error) {
         console.log(error);

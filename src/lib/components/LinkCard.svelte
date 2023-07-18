@@ -1,7 +1,7 @@
 <script>
     import { Avatar } from "@skeletonlabs/skeleton"
     import Ellipsis from "../svgs/Ellipsis.svelte";
-    export let link, icon, name, id
+    export let link, icon, name, classroom
 </script>
 
 <div class="grid w-full grid-cols-[auto_1fr] gap-4">

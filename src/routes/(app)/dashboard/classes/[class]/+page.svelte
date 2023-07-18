@@ -29,4 +29,16 @@
         {/if}
         {/await}
     </div>
+
+    <div class="my-4">
+        <h4 class="text-2xl">Journal here</h4>
+        {#await data.streamed.journal}
+            <p>loading journal</p>
+        {:then journal}
+            <p>{journal.body ? journal.body : 'No journal body'}</p>
+            <p>{journal.id}</p>
+            <p>{journal.owner}</p>
+            <p>{journal.class}</p>
+        {/await}
+    </div>
 </div>
