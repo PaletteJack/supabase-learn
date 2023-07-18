@@ -1,28 +1,26 @@
 <script>
-    import { AppShell, Drawer, drawerStore } from '@skeletonlabs/skeleton';
-    import Nav from '$lib/components/Nav.svelte';
-    import Menu from '$lib/svgs/Menu.svelte';
+    import { AppShell } from '@skeletonlabs/skeleton';
+    import Rail from '$lib/components/Rail.svelte';
+    import MobileRail from '$lib/components/MobileRail.svelte';
 
-    const drawerOpen = () => drawerStore.open()
 
 </script>
 
-<Drawer width="w-6/12">
-    <Nav />
-</Drawer>
-
-<AppShell slotSidebarLeft="transition-all ease-in-out w-0 lg:w-72 shadow-lg h-screen" slotPageHeader="bg-transparent">
+<AppShell 
+slotSidebarLeft="w-0 lg:w-fit" 
+slotPageHeader="bg-transparent"
+slotFooter="h-fit lg:h-0">
 	<svelte:fragment slot="sidebarLeft">
-        <Nav />
+        <Rail />
   	</svelte:fragment>
 	<svelte:fragment slot="pageHeader">
-		<button class="btn btn-icon md:hidden" on:click={drawerOpen}>
-			<Menu />
-		</button>
-  </svelte:fragment>
+    </svelte:fragment>
 	<!-- Router Slot -->
-    <div class="w-full h-screen overflow-hidden p-4">
+    <div class="w-full h-full overflow-hidden p-4">
         <slot />
     </div>
 	<!-- ---- / ---- -->
+    <svelte:fragment slot="footer">
+        <MobileRail />
+    </svelte:fragment>
 </AppShell>

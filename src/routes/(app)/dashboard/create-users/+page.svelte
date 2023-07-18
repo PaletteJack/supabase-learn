@@ -58,8 +58,15 @@
                 <p>Single User Form</p>
                 <input class="input p-2" type="email" name="email" placeholder="email">
                 <div class="input-group input-group-divider grid-cols-[1fr_auto]">
-                  <input class:input-warning={revealed} class="input p-2" type="{revealed ? 'text' : 'password'}" name="password" placeholder="password">
-                  <button class:variant-filled-primary={revealed} class="input-group-shim variant-soft-primary" on:click={toggleVisibility} type="button"><Eye /></button>
+                  <input class="input p-2" type="{revealed ? 'text' : 'password'}" name="password" placeholder="password">
+                  <button 
+                  class:variant-soft-primary={revealed} 
+                  class="input-group-shim variant-filled-primary" 
+                  on:click={toggleVisibility} 
+                  type="button"
+                  >
+                    <Eye />
+                  </button>
                 </div>
                 <p>Personal Info</p>
                 <input class="input p-2" type="text" name="firstName" placeholder="first name">
