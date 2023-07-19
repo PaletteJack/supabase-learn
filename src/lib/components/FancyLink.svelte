@@ -1,6 +1,6 @@
 <script>
     import { Avatar } from "@skeletonlabs/skeleton"
-    import ArrowRight from "../svgs/ArrowRight.svelte";
+    import Arrow from "../svgs/Arrow.svelte";
     export let link, icon, name, id, classroom
     let isHovering;
 
@@ -24,6 +24,6 @@ on:mouseleave={doSomethingElse}
     </div>
     <div class="flex gap-4 items-center justify-around">
         <p class="text-lg">{name}</p>
-        <ArrowRight />
+        <Arrow />
     </div>
 </a>

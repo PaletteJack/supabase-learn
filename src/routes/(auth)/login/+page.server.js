@@ -4,7 +4,7 @@ import { cookieSettings } from '$lib/utils.js';
 // export const load = async ({ locals: { getSession } }) => {
 //     const session = await getSession()
 //     if (session) {
-//         throw redirect(303, '/dashboard')
+//         throw redirect(303, '/home')
 //     }
 
 // }
@@ -21,7 +21,7 @@ export const actions = {
         if (data) {
             const { data: userData, error: err } = await sb.from('user_data').select().eq('id', data.user.id).limit(1).single();
             cookies.set('user_data', JSON.stringify(userData), cookieSettings)
-            throw redirect(303, '/dashboard')
+            throw redirect(303, '/home')
         }
 
         if (error) {

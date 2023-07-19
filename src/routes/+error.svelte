@@ -6,6 +6,6 @@
     <div>
         <h1 class="text-3xl">{$page.status}</h1>
         <p>{$page.error.message}</p>
-        <a href="/dashboard">Go home</a>
+        <a href="/home">Go home</a>
     </div>
 </div>
