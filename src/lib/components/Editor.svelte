@@ -2,26 +2,37 @@
     import { onMount, onDestroy } from "svelte";
     import { Editor } from "@tiptap/core"
     import StarterKit from "@tiptap/starter-kit"
+    import Underline from "@tiptap/extension-underline"
     import ArrowLeft from "../svgs/ArrowLeft.svelte";
     import ArrowRight from "../svgs/ArrowRight.svelte";
-    export let body;
-
+    import { writable } from "svelte/store";
+    import { enhance, applyAction } from '$app/forms';
+    import { invalidateAll } from '$app/navigation';
+    import { toastStore } from '@skeletonlabs/skeleton';
+    export let id;
+    export let content;
     let element
     let editor
 
-    const btnStyles="p-2 w-9 h-9 text-center flex items-center justify-center"
-    const containerStyles="flex w-full oveflow-hidden variant-soft-tertiary rounded-t-none rounded-b-2xl justify-between"
+    const contentStore = writable(content);
+
+    const btnStyles="p-2 w-10 h-10 text-center flex items-center justify-center"
+    const containerStyles="flex w-full variant-soft-tertiary rounded-t-none rounded-b-2xl justify-between"
 
     onMount(() => {
         editor = new Editor({
             element: element,
             extensions: [
                 StarterKit,
+                Underline
             ],
-            content: `${body}`,
+            content: `${content}`,
             onTransaction: () =>{
                 editor = editor
             }
+        });
+        editor.on('update', ({ editor }) => {
+            contentStore.set(editor.getHTML());
         })
     })
 
@@ -30,22 +41,36 @@
             editor.destroy();
         }
     })
+
+    function submitForm({ form }) {
+
+        return async({ result }) => {
+            switch (result.type) {
+                case 'success':
+                    form.reset()
+                    await applyAction(result);
+                    await invalidateAll()
+                    toastStore.trigger({message: result.data.message, background: "variant-filled-success"})
+                    break;
+                case 'failure':
+                    toastStore.trigger({message: result.data.message, background: "variant-filled-error"})
+                default:
+                    break;
+            }
+        }
+
+    }
 </script>
-<div class="bg-white rounded-t-2xl" bind:this={element} />
+
+<div bind:this={element} />
 
 {#if editor}
 <div class={containerStyles}>
 
     <div class="flex">
-        <button 
-        class='{btnStyles} rounded-bl-2xl'
-        on:click={() => editor.chain().focus().setParagraph().run()} 
-        class:active={editor.isActive('paragraph')}>
-            P
-        </button>
 
         <button
-        class={btnStyles} 
+        class='{btnStyles} rounded-bl-2xl' 
         on:click={() => editor.chain().focus().toggleBold().run()} 
         class:active={editor.isActive('bold')}>
             <strong>B</strong>
@@ -60,10 +85,17 @@
 
         <button
         class={btnStyles} 
+        on:click={() => editor.chain().focus().toggleUnderline().run()} 
+        class:active={editor.isActive('underline')}>
+            <span class="underline">U</span>
+        </button>
+
+        <!-- <button
+        class={btnStyles} 
         on:click={() => editor.chain().focus().toggleStrike().run()} 
         class:active={editor.isActive('strike')}>
             <span class="line-through">S</span>
-        </button>
+        </button> -->
     </div>
 
     <div class="flex">
@@ -80,6 +112,19 @@
         >
             <ArrowRight />
         </button>
+
+        <form action="?/saveJournal" method="POST" use:enhance={submitForm}>
+            <input type="hidden" name="id" value="{id}">
+            <input type="hidden" name="body" value="{$contentStore}">
+            <div class="w-full flex flex-row-reverse">
+                <button 
+                disabled={$contentStore.length <= 10} 
+                class="btn max-h-[40px] variant-filled-secondary rounded-l-none rounded-tr-none rounded-br-2xl"
+                >
+                Save
+                </button>
+            </div>
+        </form>
     </div>
 
 </div>

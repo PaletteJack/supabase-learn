@@ -1,19 +1,17 @@
 <script>
     import FancyLink from '$lib/components/FancyLink.svelte';
     import Editor from '$lib/components/Editor.svelte';
+    import JournalCard from "$lib/components/JournalCard.svelte"
     export let data;
 
     const { classroom } = data;
+
 </script>
 
 <div>
     <h3 class="text-3xl">{classroom.name}</h3>
 
-    {#if data.is_owner}
-    <p>I am an owner</p>
-    {:else}
-    <p>I am a student</p>
-    {/if}
+    <p>I am {data.is_owner ? 'an owner' : 'a student'}</p>
     <!-- Will kick off regardless -->
     <div class="my-4">
         <h4 class="text-2xl">Cards here</h4>
@@ -31,6 +29,18 @@
         {/if}
         {/await}
     </div>
+    <!-- Will kick off regardless -->
+
+    {#if data.is_owner}
+        <form action="?/createCard" method="POST" enctype="multipart/form-data">
+            <p class="text-2xl">Create New Card</p>
+            <input type="hidden" name="classroom" value={classroom.id}>
+            <input class="input p-2" type="text" name="name" placeholder="name">
+            <input class="input p-2" type="text" name="link" placeholder="link">
+            <input class="input p-2" type="file" name="icon" accept=".png, .jpeg, .jpg, .webp" />
+            <button class="btn variant-filled-tertiary">Submit</button>
+        </form>
+    {/if}
 
     {#if !data.is_owner}
     <!-- Checking if user is a student -->
@@ -40,14 +50,7 @@
             {#await data.streamed.journal}
             <p>loading journal</p>
             {:then journal}
-            <Editor body={journal.body ?? '<p>Hello World! 🌍️ </p>'}/>
-                <!-- <form action="?/saveJournal" method="POST">
-                    <input type="hidden" name="id" value="{journal.id}">
-                    <textarea class="textarea p-2" rows="4" name="body" placeholder="Call (623) 208-8749 for a good time ;)" value={journal.body}/>
-                    <div class="w-full flex flex-row-reverse mt-4">
-                        <button class="btn variant-filled-secondary">Save</button>
-                    </div>
-                </form> -->
+                <Editor content={journal.body} id={journal.id} />
             {:catch err}
                 <p>Could not load current Journal! {err}</p>
             {/await}
@@ -58,16 +61,11 @@
             <p>loading journal list</p>
             {:then journals}
                 {#if journals.length != 0}
+                <div class="flex flex-col gap-4">
                     {#each journals as journal (journal.id)}
-                    <div class="card">
-                        <header class="card-header">
-                            <p>Date submitted: {journal.entry_date}</p>
-                        </header>
-                        <section class="p-4">
-                            <p>{journal.body ? journal.body : 'No journal body'}</p>
-                        </section>
-                    </div>
+                        <JournalCard journal={journal} />
                     {/each}
+                </div>
                 {:else}
                     <p>No journals to show!</p>
                 {/if}

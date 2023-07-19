@@ -5,13 +5,18 @@
 	import Gear from "../svgs/Gear.svelte";
 	import School from "../svgs/School.svelte";
     import { page } from "$app/stores"
+	export let userData;
 
 </script>
 
 <AppRail>
-	<svelte:fragment slot="lead">
-		<AppRailAnchor href="/home" selected={$page.url.pathname === '/'}>👨‍💻</AppRailAnchor>
-	</svelte:fragment>
+	<!-- <svelte:fragment slot="lead">
+		<AppRailAnchor href="/home" selected={$page.url.pathname === '/'}>
+			<div class="w-full h-full grid place-items-center">
+				<img src="Cobalt Logo.svg" alt="cobalt-ed" width="50" height="50" /> 
+			</div>
+		</AppRailAnchor>
+	</svelte:fragment> -->
 	<!-- --- -->
 	<AppRailAnchor href="/home" title="home" selected={$page.url.pathname === '/home'}>
 		<svelte:fragment slot="lead"><Home /></svelte:fragment>
@@ -21,10 +26,17 @@
 		<svelte:fragment slot="lead"><School /></svelte:fragment>
 		<span>Classes</span>
 	</AppRailAnchor>
-	<AppRailAnchor href="/home/create-users" title="Admin" selected={$page.url.pathname.includes('/home/create-users')}>
+	{#if userData.role === 'Admin'}
+	<AppRailAnchor href="/home/admin" title="Admin" selected={$page.url.pathname.includes('/home/admin')}>
 		<svelte:fragment slot="lead"><Gear /></svelte:fragment>
 		<span>Admin</span>
 	</AppRailAnchor>
+	{:else}
+	<AppRailAnchor href="/home/settings" title="Admin" selected={$page.url.pathname.includes('/home/settings')}>
+		<svelte:fragment slot="lead"><Gear /></svelte:fragment>
+		<span>Settings</span>
+	</AppRailAnchor>
+	{/if}
 	<!-- --- -->
 	<svelte:fragment slot="trail">
 		<AppRailAnchor href="/auth/logout"  title="Logout">

@@ -1,4 +1,4 @@
-import { error } from '@sveltejs/kit'
+import { error, fail } from '@sveltejs/kit'
 
 export const load = async ({ params, locals: { sb, userData } }) => {
     
@@ -127,3 +127,31 @@ export const load = async ({ params, locals: { sb, userData } }) => {
     })
 
 }
+
+export const actions = {
+    createCard: async ({ request, locals: { sb } }) => {
+        console.log('hit action');
+        const body = Object.fromEntries(await request.formData());
+        console.log(body.icon);
+    },
+
+    saveJournal: async ({ request, locals: { sb } }) => {
+        const formBody = Object.fromEntries(await request.formData());
+        
+
+        const { error: err} = await sb
+        .from('journals')
+        .update({body: formBody.body})
+        .eq('id', formBody.id)
+
+        if (!err) {
+            return {
+                message: 'Journal Saved!'
+            }
+        }
+
+        return fail(500, {
+            message: "Couldn't save your journal!"
+        })
+    }
+};

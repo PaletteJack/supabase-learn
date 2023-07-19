@@ -2,7 +2,7 @@
     import { AppShell } from '@skeletonlabs/skeleton';
     import Rail from '$lib/components/Rail.svelte';
     import MobileRail from '$lib/components/MobileRail.svelte';
-
+    export let data;
 
 </script>
 
@@ -11,7 +11,7 @@ slotSidebarLeft="w-0 lg:w-fit"
 slotPageHeader="bg-transparent"
 slotFooter="h-fit lg:h-0">
 	<svelte:fragment slot="sidebarLeft">
-        <Rail />
+        <Rail userData={data.userData} />
   	</svelte:fragment>
 	<svelte:fragment slot="pageHeader">
     </svelte:fragment>
@@ -21,6 +21,6 @@ slotFooter="h-fit lg:h-0">
     </div>
 	<!-- ---- / ---- -->
     <svelte:fragment slot="footer">
-        <MobileRail />
+        <MobileRail userData={data.userData} />
     </svelte:fragment>
 </AppShell>

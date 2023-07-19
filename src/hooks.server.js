@@ -22,7 +22,7 @@ export const handle = async ({ event, resolve }) => {
         userData = JSON.parse(userDataCookie)
         event.locals.userData = userData;
     } catch (err) {
-        console.log(err);
+        console.error('Could not parse userData from cookie');
         event.locals.userData = null
     }
     
