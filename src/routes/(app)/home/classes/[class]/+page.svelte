@@ -6,13 +6,16 @@
 
     const { classroom } = data;
 
+
 </script>
+<svelte:head>
+    <title>{classroom.name}</title>
+</svelte:head>
 
 <div>
-    <h3 class="text-3xl">{classroom.name}</h3>
-
-    <p>I am {data.is_owner ? 'an owner' : 'a student'}</p>
     <!-- Will kick off regardless -->
+    <h3 class="text-3xl">{classroom.name}</h3>
+    <p>I am {data.is_owner ? 'an owner' : 'a student'}</p>
     <div class="my-4">
         <h4 class="text-2xl">Cards here</h4>
         {#await data.streamed.cards}
@@ -28,22 +31,20 @@
             <p>No cards to show!</p>
         {/if}
         {/await}
+        {#if data.is_owner}
+        <div class=" flex flex-row-reverse mt-4">
+            <a class="inline-block hover:underline" href="/home/classes/{classroom.id}/edit">Edit Cards</a>
+        </div>
+        {/if}
     </div>
     <!-- Will kick off regardless -->
 
-    {#if data.is_owner}
-        <form action="?/createCard" method="POST" enctype="multipart/form-data">
-            <p class="text-2xl">Create New Card</p>
-            <input type="hidden" name="classroom" value={classroom.id}>
-            <input class="input p-2" type="text" name="name" placeholder="name">
-            <input class="input p-2" type="text" name="link" placeholder="link">
-            <input class="input p-2" type="file" name="icon" accept=".png, .jpeg, .jpg, .webp" />
-            <button class="btn variant-filled-tertiary">Submit</button>
-        </form>
-    {/if}
+    <!-- If user == owner || admin -->
 
+    <!-- If user == owner || admin -->
+
+    <!-- default view for students -->
     {#if !data.is_owner}
-    <!-- Checking if user is a student -->
     <div class="my-4">
         <p class="text-2xl font-semibold">Current Journal</p>
         <div class="card p-4 mb-8">
@@ -75,5 +76,6 @@
         </div>
     </div>
     {/if}
+    <!-- default view for students -->
 
 </div>

@@ -1,5 +1,14 @@
 <script>
+    import { toastStore } from "@skeletonlabs/skeleton";
     import { enhance } from "$app/forms"
+    import { onMount } from "svelte";
+    export let form
+
+    onMount(() => {
+        if (form?.error) {
+            toastStore.trigger({message: form?.message, background: "variant-filled-error"})
+        }
+    })
 
 </script>
 

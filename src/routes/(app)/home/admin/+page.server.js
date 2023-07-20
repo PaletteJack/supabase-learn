@@ -8,6 +8,25 @@ export const load= async ({ locals: { userData } }) => {
 }
 
 export const actions = {
+    addImage: async ({ request, locals: { sb } }) => {
+        const body = Object.fromEntries(await request.formData());
+        let imageLink = "https://epalnbncirlkzxastmpe.supabase.co/storage/v1/object/public/link-icons/"
+        const file = body.file
+
+        const { data, error} = await sb
+        .storage
+        .from('link-icons')
+        .upload(`${file.name}`, file, {
+            cacheControl: "3600",
+            upsert: false
+        })
+
+        if (data) {
+            imageLink = imageLink + data.path
+            console.log(imageLink);
+        }
+    },
+
     createUser: async ({ request }) => {
         const body = Object.fromEntries(await request.formData());
 

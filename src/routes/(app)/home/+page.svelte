@@ -10,12 +10,4 @@
         <p>User role: <strong>{userData.role}</strong></p>
         <p>Is a site admin: <strong>{userData.site_admin}</strong></p>
     </div>
-    <div class="w-full flex flex-row-reverse justify-between">
-        {#if userData.site_admin}
-        <a class="btn variant-filled-secondary" href="/home/create-users">Create Users</a>
-        {/if}
-        <form action="/auth/logout" method="POST">
-            <button class="btn variant-filled-warning" type="submit">Sign Out</button>
-        </form>
-    </div>
 </div>

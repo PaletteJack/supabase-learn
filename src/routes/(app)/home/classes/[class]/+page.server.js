@@ -13,7 +13,27 @@ export const load = async ({ params, locals: { sb, userData } }) => {
             .select()
             .eq('id', classID)
             .eq('owner', userID)
-            .limit(1)
+            .single();
+
+        if (err) {
+            console.error({err})
+        }
+            
+        if (!err) {
+            return {
+                classroom,
+                is_owner: true,
+                userData: userData,
+                streamed: {
+                    cards: getResourceCards()
+                }
+            }
+        }
+    }else if (userRole === 'Admin') {
+        const { data: classroom, error: err } = await sb
+            .from('classrooms')
+            .select()
+            .eq('id', classID)
             .single();
 
         if (err) {
@@ -113,7 +133,11 @@ export const load = async ({ params, locals: { sb, userData } }) => {
     }
 
     async function getResourceCards() {
-        const { data, error } = await sb.from('resource_cards').select('*').eq('classroom', classID)
+        const { data, error } = await sb
+        .from('resource_cards')
+        .select('*')
+        .eq('classroom', classID)
+        .eq('hidden', false)
 
         if (data) {
             return data;
@@ -129,12 +153,6 @@ export const load = async ({ params, locals: { sb, userData } }) => {
 }
 
 export const actions = {
-    createCard: async ({ request, locals: { sb } }) => {
-        console.log('hit action');
-        const body = Object.fromEntries(await request.formData());
-        console.log(body.icon);
-    },
-
     saveJournal: async ({ request, locals: { sb } }) => {
         const formBody = Object.fromEntries(await request.formData());
         

@@ -16,6 +16,8 @@ export const handle = async ({ event, resolve }) => {
         return session
     }
 
+    const session = await event.locals.getSession();
+
     let userData
     try {
         const userDataCookie = event.cookies.get('user_data')
@@ -25,10 +27,9 @@ export const handle = async ({ event, resolve }) => {
         console.error('Could not parse userData from cookie');
         event.locals.userData = null
     }
-    
 
     if (event.url.pathname.startsWith('/dashboard')) {
-        if (!userData) {
+        if (!userData || !session) {
             throw redirect('301', '/login')
         }
     }

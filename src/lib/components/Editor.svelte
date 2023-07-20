@@ -47,9 +47,7 @@
         return async({ result }) => {
             switch (result.type) {
                 case 'success':
-                    form.reset()
                     await applyAction(result);
-                    await invalidateAll()
                     toastStore.trigger({message: result.data.message, background: "variant-filled-success"})
                     break;
                 case 'failure':
