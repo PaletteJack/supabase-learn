@@ -53,8 +53,8 @@
   <ul class="list-none p-0 flex flex-col items-center">
     {#each list as item, index (item.id)}
       <li
-        class="border-2 border-dashed border-transparent p-2 transition-all max-w-md w-full"
-        class:over={item.id === isOver}
+        class="border-2 border-dashed border-transparent p-2 transition-all max-w-md w-full hover:cursor-grab"
+        class:over={item.id == isOver}
         data-index={index}
         data-id={item.id}
         draggable="true"
@@ -74,6 +74,6 @@
 
 <style lang="postcss">
   .over {
-    @apply border-gray-400 scale-105;
+    @apply border-secondary-400 scale-105 rounded-full;
   }
 </style>

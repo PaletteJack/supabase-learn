@@ -2,12 +2,12 @@
     import EditFancyLink from '$lib/components/EditFancyLink.svelte';
     import SortableList from '$lib/components/SortableList.svelte';
     import CreateCard from '$lib/forms/CreateCard.svelte';
-    import { slide } from 'svelte/transition';
+    import DocumentPlus from '$lib/svgs/DocumentPlus.svelte';
+    import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
     export let data;
 
     const { sb, classID } = data;
     $: cards = data.cards
-    let showForm = false;
 
     async function deleteLink(item) {
         console.log(item);
@@ -19,7 +19,7 @@
     }
 
     async function sortList(e) {
-        console.log(e.detail);
+        // console.log(e.detail);
         const newList = e.detail;
         const oldList = [...cards];
         let item1, item2
@@ -47,9 +47,9 @@
     
 </script>
 
-<p>Edit cards page</p>
+<a href="/home/classes/{classID}" class="hover:underline">Go back</a>
 <div class="my-4">
-    <h4 class="text-2xl">Cards here</h4>
+    <h4 class="text-2xl text-center">Card Order</h4>
     {#if cards.length != 0}
     <SortableList list={cards} on:sort={sortList} let:item let:index>
         <div class="group relative">
@@ -66,19 +66,13 @@
 </div>
 
 <div>
-    {#if showForm}
-    <div transition:slide>
-        <CreateCard id={classID} />
-    </div>
-    {/if}
-    <div class="flex gap-4">
-        <button class="btn variant-filled-success" on:click={() => (showForm = true)}>
-            New Card
-        </button>
-        {#if showForm}
-        <button class="btn variant-filled-error" on:click={() => (showForm = false)}>
-            Close Form
-        </button>
-        {/if}
-    </div>
+    <Accordion>
+        <AccordionItem>
+            <svelte:fragment slot="lead"><DocumentPlus /> </svelte:fragment>
+            <svelte:fragment slot="summary">Add New Card</svelte:fragment>
+            <svelte:fragment slot="content">
+                <CreateCard id={classID} />
+            </svelte:fragment>
+        </AccordionItem>
+    </Accordion>
 </div>
