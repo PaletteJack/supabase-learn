@@ -1,9 +1,13 @@
 <script>
     import { Avatar, popup, modalStore } from "@skeletonlabs/skeleton"
+    import { createEventDispatcher } from "svelte";
     import Ellipsis from "../svgs/Ellipsis.svelte";
     import HiddenEye from "../svgs/HiddenEye.svelte";
+    import Trash from "../svgs/Trash.svelte";
     import EditCardSettings from "../forms/admin/EditCardSettings.svelte";
     export let link, icon, name, id, classroom, hidden, sort_order;
+
+    const dispatch = createEventDispatcher()
 
     const cardModalComponent = {
         ref: EditCardSettings,
@@ -25,6 +29,15 @@
         target: `popup-${id}`,
         placement: 'right'
     }
+
+    const confirmModal = {
+        type: 'confirm',
+        title: 'Please Confirm',
+        body: 'Are you sure you want to delete this card? This action cannot be undone.',
+        response: (r) => {
+            if (r) dispatch('deleteCard', id)
+        }
+    }
 </script>
 
 <div 
@@ -38,12 +51,17 @@ class="relative card px-4 py-2 grid grid-cols-[auto_1fr] gap-2 w-full variant-gl
             <p class="text-lg">{name}</p>
             <p class="text-sm">Full Link: {link}</p>
         </div>
-        <button class="btn-icon btn-icon-sm [&>*]:pointer-events-none" type="button" use:popup={popupSettings} on:click={triggerModal}>
-            <Ellipsis />
-        </button>
+        <div class="flex">
+            <button class="btn-icon btn-icon-sm" type="button" on:click={() => modalStore.trigger(confirmModal)}>
+                <Trash />
+            </button>
+            <button class="btn-icon btn-icon-sm [&>*]:pointer-events-none" type="button" use:popup={popupSettings} on:click={triggerModal}>
+                <Ellipsis />
+            </button>
+        </div>
     </div>
     {#if hidden}
-    <span class="absolute p-1 -right-1 -bottom-1 badge-icon variant-filled w-7 h-7">
+    <span class="absolute p-1 -left-1 -top-1 badge-icon variant-filled w-7 h-7">
         <HiddenEye />
     </span>
     {/if}

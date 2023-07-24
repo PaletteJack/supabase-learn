@@ -1,6 +1,49 @@
 <script>
-    export let link, icon, name, id, classroom, hidden, sort_order
+    import { Avatar } from "@skeletonlabs/skeleton";
+    import { enhance, applyAction } from "$app/forms"
+    import { invalidateAll } from "$app/navigation";
+    import { toastStore, modalStore } from '@skeletonlabs/skeleton';
+    export let link, icon, name, id, hidden
     export let parent
+
+    let prevData = {
+        id: id,
+        icon: icon,
+        link: link,
+        name: name,
+        hidden: hidden
+    }
+
+    let file;
+
+    function previewImage(e) {
+        file = URL.createObjectURL(e.target.files[0]);
+    }
+
+    function clearImage() {
+        document.getElementById('file-input').value = null;
+        file = null;
+    }
+
+    function submitForm({ form }) {
+
+        return async({ result }) => {
+            switch (result.type) {
+                case 'success':
+                    await applyAction(result);
+                    await invalidateAll()
+                    modalStore.clear()
+                    toastStore.trigger({message: result.data.message, background: "variant-filled-success"})
+                    break;
+                case 'failure':
+                    modalStore.clear()
+                    toastStore.trigger({message: result.data.message, background: "variant-filled-error"})
+                default:
+                    break;
+            }
+        }
+
+    }
 </script>
 
 <style>
@@ -9,24 +52,45 @@
     }
 </style>
 
-<div class="aspect-square variant-filled-surface rounded-lg px-4 py-2 flex flex-col justify-between">
-    <form action="">
-        <div>
-            <p class="text-xl font-semibold">Card Info</p>
-            <div class="ml-4">
+<div class="card aspect-square rounded-lg p-4">
+    <p class="text-xl font-semibold">Card Info</p>
+    <form action="?/updateCard" method="POST" enctype="multipart/form-data" use:enhance={submitForm}>
+        <input type="hidden" name="oldData" value={JSON.stringify(prevData)}>
+        <input type="hidden" name="id" value={id}>
+        <div class="flex flex-col gap-4 py-2">
+            <div class="grid grid-cols-[auto_1fr]">
+                <div class="px-4">
+                    <Avatar src={file ?? icon} width="w-16" rounded="rounded-full"/>
+                    <button class="btn btn-sm variant-filled-warning" type="button" on:click={clearImage}>Reset</button>
+                </div>
+                <label class="label">
+                    <span>Card Icon</span>
+                    <input id="file-input" class="input px-4 py-2" type="file" name="icon" accept=".png, .jpeg, .jpg, .webp" on:change={previewImage}>
+                </label>
+            </div> 
+            <label class="label">
+                <span>Card URL</span>
                 <input class="input px-4 py-2" type="text" name="link" value="{link}">
-                <input class="input px-4 py-2" type="text" name="icon" value="{icon}">
+            </label>
+            <label class="label">
+                <span>Card Name</span>
                 <input class="input px-4 py-2" type="text" name="name" value="{name}">
-                <select class="select" name="hidden">
-                    <option value={hidden}>{hidden ? 'Yes' : 'No'}</option>
-                    <option value={!hidden}>{!hidden ? 'Yes' : 'No'}</option>
-                </select>
+            </label>
+            <div class="flex space-x-4">
+                <label class="flex items-center space-x-2">
+                    <input class="radio" type="radio" checked={!hidden ? true : false} name="hidden" value={false} />
+                    <p>Public</p>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input class="radio" type="radio" checked={hidden ? true : false} name="hidden" value={true} />
+                    <p>Hidden</p>
+                </label>
             </div>
         </div>
     
-        <div class="flex flex-row-reverse gap-4">
+        <div class="flex flex-row-reverse gap-2 mt-4">
             <button class="btn variant-filled-success">Save</button>
-            <button class="btn variant-filled-error" type="button" on:click={parent.onClose()}>Close</button>
+            <button class="btn variant-filled-warning" type="button" on:click={parent.onClose()}>Close</button>
         </div>
     </form>
 </div>

@@ -138,6 +138,7 @@ export const load = async ({ params, locals: { sb, userData } }) => {
         .select('*')
         .eq('classroom', classID)
         .eq('hidden', false)
+        .order('sort_order', { ascending: true})
 
         if (data) {
             return data;

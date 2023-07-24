@@ -3,19 +3,28 @@
     import SortableList from '$lib/components/SortableList.svelte';
     import CreateCard from '$lib/forms/CreateCard.svelte';
     import DocumentPlus from '$lib/svgs/DocumentPlus.svelte';
-    import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+    import { Accordion, AccordionItem, toastStore } from '@skeletonlabs/skeleton';
     export let data;
 
     const { sb, classID } = data;
     $: cards = data.cards
 
     async function deleteLink(item) {
-        console.log(item);
-        // console.log(item);
-        // const userRef = doc(db, "users", $user.uid);
-        // await updateDoc(userRef, {
-        //     links: arrayRemove(item),
-        // });
+        const id = item.detail;
+        const { error } = await sb
+        .from('resource_cards')
+        .delete()
+        .eq('id', id);
+
+        if (!error) {
+            cards = cards.filter(card => card.id !== id);
+            toastStore.trigger({message: "Card has been deleted. You may need to refresh to see the changes", background: "variant-filled-success"})
+        }
+
+        if (error) {
+            console.error("Could not delete card", error);
+            toastStore.trigger({message: "There was an issue deleting the requested card", background: "variant-filled-error"})
+        }
     }
 
     async function sortList(e) {
@@ -32,7 +41,7 @@
             }
         }
 
-        if (item1 && item2) {
+        if ((item1 && item2) || (item1 != item2)) {
             [item1['sort_order'], item2['sort_order']] = [item2['sort_order'], item1['sort_order']]
 
             const { error } = await sb.from('resource_cards').upsert([item1, item2], { returning: 'minimal' });
@@ -53,11 +62,7 @@
     {#if cards.length != 0}
     <SortableList list={cards} on:sort={sortList} let:item let:index>
         <div class="group relative">
-            <EditFancyLink {...item} />
-            <!-- <button
-            on:click={() => deleteLink(item)}
-            class="btn btn-sm variant-filled-error invisible group-hover:visible transition-all absolute -right-6 bottom-10"
-            >Delete</button> -->
+            <EditFancyLink {...item} on:deleteCard={deleteLink}/>
         </div>
     </SortableList>
     {:else}

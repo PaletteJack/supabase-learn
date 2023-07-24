@@ -1,3 +1,4 @@
+import { fail } from '@sveltejs/kit';
 
 
 export const load = async ({ params, locals: { sb }}) => {
@@ -39,7 +40,7 @@ export const actions = {
         })
 
         if(iconError) {
-            console.error('Have an error: ', error);
+            console.error('Have an error: ', iconError);
         }
 
         // get image path
@@ -83,4 +84,65 @@ export const actions = {
             message: "Something went wrong. Refresh the page and try again."
         })
     },
+
+    updateCard:  async ({ request, locals: { sb } }) => {
+        const body = Object.fromEntries(await request.formData())
+        const id = Number(body.id);
+        const oldData = JSON.parse(body.oldData);
+        delete body.oldData
+        let newData = {}
+
+        for (let key in body) {
+            if (typeof body[key] === 'string' && ['true', 'false'].includes(body[key])) {
+                body[key] = body[key] === 'true';
+            }
+
+            if (typeof body[key] === 'object') {
+                if (body[key].size !== 0) {
+                    let imageLink = "https://epalnbncirlkzxastmpe.supabase.co/storage/v1/object/public/link-icons/";
+                    const { data, error: err } = await sb
+                        .storage
+                        .from('link-icons')
+                        .upload(`${body[key].name}`, body[key])
+
+                    if (!err) {
+                        const iconLink = imageLink + data.path;
+                        newData[key] = iconLink;
+                    } else {
+                        console.error('There was an issue uploading the file', err);
+                    }
+                }
+                continue;
+            }
+
+            if (body[key] != oldData[key] && body[key] !== null && body[key] !== '') {
+                newData[key] = body[key];
+            }
+        }
+
+        // console.log(newData);
+
+        const { error: err } = await sb
+        .from('resource_cards')
+        .update(newData)
+        .eq('id', id)
+
+        if (!err) {
+            return {
+                message: "Card updated"
+            }
+        }
+
+        if (err) {
+            console.error('Could not update card: ', err);
+            return fail(400, {
+                message: "Bad request. Try again later"
+            })
+        }
+
+        return fail(500, {
+            message: "Something went wrong."
+        })
+
+    }
 };

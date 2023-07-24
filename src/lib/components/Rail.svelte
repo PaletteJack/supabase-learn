@@ -4,6 +4,7 @@
 	import Logout from "../svgs/Logout.svelte";
 	import Gear from "../svgs/Gear.svelte";
 	import School from "../svgs/School.svelte";
+	import Wrench from "../svgs/Wrench.svelte";
     import { page } from "$app/stores"
 	export let userData;
 
@@ -26,15 +27,14 @@
 		<svelte:fragment slot="lead"><School /></svelte:fragment>
 		<span>Classes</span>
 	</AppRailAnchor>
-	{#if userData.role === 'Admin'}
-	<AppRailAnchor href="/home/admin" title="Admin" selected={$page.url.pathname.includes('/home/admin')}>
-		<svelte:fragment slot="lead"><Gear /></svelte:fragment>
-		<span>Admin</span>
-	</AppRailAnchor>
-	{:else}
 	<AppRailAnchor href="/home/settings" title="Admin" selected={$page.url.pathname.includes('/home/settings')}>
 		<svelte:fragment slot="lead"><Gear /></svelte:fragment>
 		<span>Settings</span>
+	</AppRailAnchor>
+	{#if userData.role === 'Admin'}
+	<AppRailAnchor href="/home/admin" title="Admin" selected={$page.url.pathname.includes('/home/admin')}>
+		<svelte:fragment slot="lead"><Wrench /></svelte:fragment>
+		<span>Admin</span>
 	</AppRailAnchor>
 	{/if}
 	<!-- --- -->
