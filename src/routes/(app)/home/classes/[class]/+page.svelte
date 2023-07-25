@@ -2,10 +2,33 @@
     import FancyLink from '$lib/components/FancyLink.svelte';
     import Editor from '$lib/components/Editor.svelte';
     import JournalCard from "$lib/components/JournalCard.svelte"
+    import { ProgressRadial } from '@skeletonlabs/skeleton';
+    import StudentsTable from '$lib/components/StudentsTable.svelte';
+    import CursorClick from '$lib/svgs/CursorClick.svelte';
     export let data;
 
-    const { classroom } = data;
+    const { classroom, sb } = data;
+    let students;
+    let loading = false;
 
+    async function getClassroomStudents() {
+        loading = true;
+        const { data, error } = await sb
+        .from('classroom_students')
+        .select(`
+        student,
+        student_data ( first_name, last_name )
+        `)
+        .eq('class', classroom.id)
+
+        if (data) {
+            loading = false;
+            return students = data;
+        }
+
+        loading = false;
+        return null
+    }
 
 </script>
 <svelte:head>
@@ -24,7 +47,7 @@
         {#if cards.length != 0}
         <div class="flex flex-col gap-4">
             {#each cards as card}
-            <FancyLink {...card} />
+            <FancyLink {card} />
             {/each}
         </div>
         {:else}
@@ -40,6 +63,27 @@
     <!-- Will kick off regardless -->
 
     <!-- If user == owner || admin -->
+    {#if data.is_owner}
+    <div class="">
+        <div class="flex gap-4 items-end mb-2">
+            <h4 class="text-2xl font-semibold">Student Journals</h4>
+            <button class="hover:underline flex relative" type="button" disabled={students ? true : false} on:click={getClassroomStudents}>View Journal Entries <CursorClick extClasses="absolute -bottom-2 -right-4"/></button>
+            <!-- <button class="hover:underline flex relative" type="button" on:click={getClassroomStudents}>View Journal Entries <CursorClick extClasses="absolute -bottom-2 -right-4"/></button> -->
+        </div>
+        {#if loading}
+        <div class="w-full grid place-items-center">
+            <ProgressRadial value={undefined} stroke={60} meter="stroke-primary-500" track="stroke-primary-500/30" />
+        </div>
+        {/if}
+        {#if students}
+            {#if students.length != 0}
+                <StudentsTable {students} classID={classroom.id} />
+            {:else}
+                <p>No students yet</p>
+            {/if}
+        {/if}
+    </div>
+    {/if}
 
     <!-- If user == owner || admin -->
 

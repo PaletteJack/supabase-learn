@@ -2,7 +2,7 @@ import { error, fail } from '@sveltejs/kit'
 
 export const load = async ({ params, locals: { sb, userData } }) => {
     
-    const userID = userData.id
+    const userID = userData.user_id
     const userRole = userData.role
     const classID = await Number(params.class);
     const date = new Date().toLocaleDateString();
@@ -25,7 +25,7 @@ export const load = async ({ params, locals: { sb, userData } }) => {
                 is_owner: true,
                 userData: userData,
                 streamed: {
-                    cards: getResourceCards()
+                    cards: getResourceCards(),
                 }
             }
         }

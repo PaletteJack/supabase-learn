@@ -19,7 +19,7 @@ export const actions = {
         })
 
         if (data.user) {
-            const { data: userData, error: err } = await sb.from('user_data').select().eq('id', data.user.id).limit(1).single();
+            const { data: userData, error: err } = await sb.from('user_data').select().eq('user_id', data.user.id).limit(1).single();
             cookies.set('user_data', JSON.stringify(userData), cookieSettings)
             throw redirect(303, '/home')
         }

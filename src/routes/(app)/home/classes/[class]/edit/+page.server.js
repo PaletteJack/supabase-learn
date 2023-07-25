@@ -15,6 +15,8 @@ export const load = async ({ params, locals: { sb }}) => {
             return data;
         }
 
+        console.log(error);
+
         return null
     }
 
