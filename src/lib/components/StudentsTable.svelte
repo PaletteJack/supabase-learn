@@ -3,6 +3,14 @@
     export let classID
     export let students;
 
+	let firstNameFilter = '';
+	let lastNameFilter = '';
+
+	$: filteredStudents = students.filter(student => 
+        student.student.first_name.toLowerCase().includes(firstNameFilter.toLowerCase()) &&
+        student.student.last_name.toLowerCase().includes(lastNameFilter.toLowerCase())
+    );
+
     function viewJournals(id) {
         goto(`/home/classes/${classID}/journals/${id}`)
     }
@@ -12,23 +20,29 @@
 		<thead>
 			<tr>
 				<th>Student ID</th>
-				<th class="table-sort-asc">First Name</th>
-				<th class="table-sort-asc">Last Name</th>
+				<th class="table-sort-asc">
+					First Name
+					<input class="input" type="text" bind:value={firstNameFilter} placeholder="Filter by first name">
+				</th>
+				<th class="table-sort-asc">
+					Last Name
+					<input class="input px-4 py-2" type="text" bind:value={lastNameFilter} placeholder="Filter by last name" />
+				</th>
 			</tr>
 		</thead>
 		<tbody>
-			{#each students as row, i}
-				<tr on:click={() => viewJournals(row.student)}>
-					<td>{row.student}</td>
-					<td>{row.student_data.first_name}</td>
-					<td>{row.student_data.last_name}</td>
+			{#each filteredStudents as row, i}
+				<tr on:click={() => viewJournals(row.student.id)}>
+					<td>{row.student.id}</td>
+					<td>{row.student.first_name}</td>
+					<td>{row.student.last_name}</td>
 				</tr>
 			{/each}
 		</tbody>
 		<tfoot>
 			<tr>
 				<th colspan="2">Total Students</th>
-				<td>{students.length}</td>
+				<td>{filteredStudents.length}</td>
 			</tr>
 		</tfoot>
 	</table>

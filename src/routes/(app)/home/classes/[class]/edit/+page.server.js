@@ -94,6 +94,7 @@ export const actions = {
         delete body.oldData
         let newData = {}
 
+        // find differences in old vs new data
         for (let key in body) {
             if (typeof body[key] === 'string' && ['true', 'false'].includes(body[key])) {
                 body[key] = body[key] === 'true';
@@ -124,6 +125,7 @@ export const actions = {
 
         // console.log(newData);
 
+        // update card
         const { error: err } = await sb
         .from('resource_cards')
         .update(newData)

@@ -1,12 +1,59 @@
 <script>
     import Eye from "$lib/svgs/Eye.svelte"
     import HiddenEye from "$lib/svgs/HiddenEye.svelte";
+    import { enhance, applyAction } from '$app/forms';
+    import { invalidateAll } from '$app/navigation'
+    import { toastStore } from "@skeletonlabs/skeleton";
     let revealed = false
 
     const toggleVisibility = () => revealed = !revealed;
+
+    function submitForm({ form, data, action, cancel }) {
+      const { firstName, lastName, email, password, role } = Object.fromEntries(data)
+
+      if (!email) {
+        toastStore.trigger({message: "Email is required", background: "variant-filled-warning"})
+        cancel()
+      }
+
+      if (!firstName) {
+          toastStore.trigger({message: "First Name is required", background: "variant-filled-warning"})
+          cancel()
+      }
+
+      if (!lastName) {
+          toastStore.trigger({message: "Last Name is required", background: "variant-filled-warning"})
+          cancel()
+      }
+
+      if (role == null || role == '') {
+        toastStore.trigger({message: "Role is required", background: "variant-filled-warning"})
+        cancel()
+      }
+
+      if (!password || password < 3) {
+          toastStore.trigger({message: "Password is too short", background: "variant-filled-warning"})
+          cancel()
+      }
+
+      return async({ result }) => {
+        switch (result.type) {
+          case 'success':
+            form.reset()
+            await applyAction(result);
+            await invalidateAll()
+            toastStore.trigger({message: result.data.message, background: "variant-filled-success"})
+            break;
+          case 'failure':
+            toastStore.trigger({message: result.data.message, background: "variant-filled-error"})
+          default:
+            break;
+          }
+        }
+    }
 </script>
 
-<form action="?/createUser" method="POST" class="flex flex-col gap-4">
+<form action="?/createUser" method="POST" class="flex flex-col gap-4" use:enhance={submitForm}>
     <p>Single User Form</p>
     <input class="input px-4 py-2" type="email" name="email" placeholder="email">
     <div class="input-group input-group-divider grid-cols-[1fr_auto]">
@@ -32,6 +79,7 @@
       <option value="student">Student</option>
       <option value="teacher">Teacher</option>
       <option value="admin">Admin</option>
+      <option value="admin">Site Admin</option>
     </select>
     <button class="btn variant-filled-secondary" type="submit">Submit</button>
 </form>

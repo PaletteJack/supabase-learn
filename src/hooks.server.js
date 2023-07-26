@@ -28,7 +28,7 @@ export const handle = async ({ event, resolve }) => {
         event.locals.userData = null
     }
 
-    if (event.url.pathname.startsWith('/dashboard')) {
+    if (event.url.pathname.startsWith('/home')) {
         if (!userData || !session) {
             throw redirect('301', '/login')
         }

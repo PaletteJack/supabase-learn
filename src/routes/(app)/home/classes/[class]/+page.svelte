@@ -16,12 +16,11 @@
         const { data, error } = await sb
         .from('classroom_students')
         .select(`
-        student,
-        student_data ( first_name, last_name )
+        student ( id, first_name, last_name )
         `)
         .eq('class', classroom.id)
 
-        if (data) {
+        if (!error) {
             loading = false;
             return students = data;
         }

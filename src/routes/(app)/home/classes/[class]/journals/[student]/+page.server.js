@@ -8,7 +8,7 @@ export const load = async ({ params, locals: { sb }}) => {
         const { data, error } = await sb
         .from('user_data')
         .select('first_name, last_name')
-        .eq('user_id', student)
+        .eq('id', student)
         .limit(1)
         .single()
 

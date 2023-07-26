@@ -29,25 +29,33 @@ export const actions = {
 
     createUser: async ({ request }) => {
         const body = Object.fromEntries(await request.formData());
+        const school = 1
+        const isAdmin = (body.role == 'Site Admin')
 
         const { data, error } = await adminAuthClient.createUser({
             email: body.email,
             password: body.password,
             email_confirm: true,
+            user_metadata: {
+                first_name: body.firstName,
+                last_name: body.lastName,
+                role: body.role,
+                school: school,
+                site_admin: isAdmin
+            }
         })
 
-        if (data) {
+        if (!error) {
             console.log(data);
             return{
-                message: 'successfully created user'
+                message: 'Successfully created user'
             }
         }
+        console.log(error);
 
-        if (error) {
-            return fail(500, {
-                message: error.message
-            })
-        }
+        return fail(500, {
+            message: error.message
+        })
         
     }
 };

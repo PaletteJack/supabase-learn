@@ -29,7 +29,7 @@ export const load = async ({ params, locals: { sb, userData } }) => {
                 }
             }
         }
-    }else if (userRole === 'Admin') {
+    }else if (userRole === 'Admin' || userRole === 'Site Admin') {
         const { data: classroom, error: err } = await sb
             .from('classrooms')
             .select()
