@@ -22,6 +22,7 @@
 
         if (!error) {
             loading = false;
+            console.log(data);
             return students = data;
         }
 
@@ -66,21 +67,25 @@
     <div class="">
         <div class="flex gap-4 items-end mb-2">
             <h4 class="text-2xl font-semibold">Student Journals</h4>
-            <button class="hover:underline flex relative" type="button" disabled={students ? true : false} on:click={getClassroomStudents}>View Journal Entries <CursorClick extClasses="absolute -bottom-2 -right-4"/></button>
             <!-- <button class="hover:underline flex relative" type="button" on:click={getClassroomStudents}>View Journal Entries <CursorClick extClasses="absolute -bottom-2 -right-4"/></button> -->
         </div>
-        {#if loading}
-        <div class="w-full grid place-items-center">
-            <ProgressRadial value={undefined} stroke={60} meter="stroke-primary-500" track="stroke-primary-500/30" />
-        </div>
-        {/if}
-        {#if students}
-            {#if students.length != 0}
-                <StudentsTable {students} classID={classroom.id} />
-            {:else}
-                <p>No students yet</p>
+        <div class="w-full">
+            {#if !students}
+                <button class="hover:underline flex relative" type="button" disabled={students ? true : false} on:click={getClassroomStudents}>View Journal Entries <CursorClick extClasses="absolute -bottom-2 -right-5"/></button>
             {/if}
-        {/if}
+            {#if loading}
+            <div class="w-full grid place-items-center">
+                <ProgressRadial value={undefined} stroke={60} meter="stroke-primary-500" track="stroke-primary-500/30" />
+            </div>
+            {/if}
+            {#if students}
+                {#if students.length != 0}
+                    <StudentsTable {students} classID={classroom.id} />
+                {:else}
+                    <p>No students yet</p>
+                {/if}
+            {/if}
+        </div>
     </div>
     {/if}
 
