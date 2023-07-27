@@ -1,6 +1,6 @@
 <script>
     import { toastStore } from "@skeletonlabs/skeleton";
-    import { enhance } from "$app/forms"
+    // import { enhance } from "$app/forms"
     import { onMount } from "svelte";
     export let form
 
@@ -24,7 +24,7 @@
                 <p class="text-sm mt-2">Sign in to continue</p>
             </div>
             <div class=" w-full">
-                <form action="?/login" method="POST" class="flex flex-col gap-4" use:enhance>
+                <form action="?/login" method="POST" class="flex flex-col gap-4">
                     <label class="label">
                         <span>Email</span>
                         <input class="input px-4 py-2" type="email" name="email" placeholder="my@email.com">

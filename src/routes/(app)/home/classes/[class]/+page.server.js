@@ -2,7 +2,7 @@ import { error, fail } from '@sveltejs/kit'
 
 export const load = async ({ params, locals: { sb, userData } }) => {
     
-    const userID = userData.user_id
+    const userID = userData.id
     const userRole = userData.role
     const classID = await Number(params.class);
     const date = new Date().toLocaleDateString();

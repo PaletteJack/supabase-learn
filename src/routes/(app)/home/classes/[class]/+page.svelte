@@ -22,7 +22,6 @@
 
         if (!error) {
             loading = false;
-            console.log(data);
             return students = data;
         }
 
@@ -35,7 +34,7 @@
     <title>{classroom.name}</title>
 </svelte:head>
 
-<div>
+<div class="container px-10 mx-auto">
     <!-- Will kick off regardless -->
     <h3 class="text-3xl">{classroom.name}</h3>
     <p>I am {data.is_owner ? 'an owner' : 'a student'}</p>
@@ -56,7 +55,7 @@
         {/await}
         {#if data.is_owner}
         <div class=" flex flex-row-reverse mt-4">
-            <a class="inline-block hover:underline" href="/home/classes/{classroom.id}/edit">Edit Cards</a>
+            <a class="inline-block hover:underline" href="/home/classes/{classroom.id}/edit-cards">Edit Cards</a>
         </div>
         {/if}
     </div>
@@ -64,14 +63,14 @@
 
     <!-- If user == owner || admin -->
     {#if data.is_owner}
-    <div class="">
-        <div class="flex gap-4 items-end mb-2">
-            <h4 class="text-2xl font-semibold">Student Journals</h4>
-            <!-- <button class="hover:underline flex relative" type="button" on:click={getClassroomStudents}>View Journal Entries <CursorClick extClasses="absolute -bottom-2 -right-4"/></button> -->
-        </div>
+    <div class="w-full flex flex-col items-center">
+        <h4 class="text-2xl font-semibold mb-4 block w-full text-center">Student Journals</h4>
         <div class="w-full">
             {#if !students}
-                <button class="hover:underline flex relative" type="button" disabled={students ? true : false} on:click={getClassroomStudents}>View Journal Entries <CursorClick extClasses="absolute -bottom-2 -right-5"/></button>
+                <button class="hover:underline relative whitespace-nowrap" type="button" disabled={students ? true : false} on:click={getClassroomStudents}>
+                    View Journal Entries 
+                    <CursorClick extClasses="absolute -bottom-2 -right-5"/>
+                </button>
             {/if}
             {#if loading}
             <div class="w-full grid place-items-center">

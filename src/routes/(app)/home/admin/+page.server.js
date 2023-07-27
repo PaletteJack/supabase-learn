@@ -1,9 +1,43 @@
 import { adminAuthClient } from "$lib/server/supabase-admin.js"
 import { fail, redirect, error } from "@sveltejs/kit";
 
-export const load= async ({ locals: { userData } }) => {
+export const load= async ({ locals: { sb, userData } }) => {
     if (!userData.site_admin) {
         throw error(401, {message: "You do not have access to this page"})
+    }
+
+    async function getSchools(){
+        const { data, error } = await sb
+        .from('schools')
+        .select('*')
+
+        if (!error) {
+            return data
+        }
+
+        return null
+    }
+
+    async function getTeachers() {
+        const { data, error } = await sb
+        .from('user_data')
+        .select(`
+        id,
+        first_name,
+        last_name,
+        school ( id, name, domain )`)
+        .eq('role', 'Teacher')
+
+        if (!error) {
+            return data
+        }
+
+        return null
+    }
+
+    return {
+        teachers: await getTeachers(),
+        schools: await getSchools()
     }
 }
 
@@ -57,5 +91,24 @@ export const actions = {
             message: error.message
         })
         
+    },
+
+    createClassroom: async ({ request, locals: { sb } }) => {
+        const body = Object.fromEntries(await request.formData());
+
+        const { data, error: err } = await sb
+        .from('classrooms')
+        .insert({name: body.name, owner: body.owner, school: Number(body.school)})
+        .select()
+
+        if (!err) {
+            return {
+                message: 'Classroom Created'
+            }
+        }
+
+        return fail(500, {
+            message: "Something went wrong. Refresh and try again"
+        })
     }
 };
