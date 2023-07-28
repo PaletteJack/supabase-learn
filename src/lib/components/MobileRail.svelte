@@ -6,7 +6,7 @@
 	import Gear from "../svgs/Gear.svelte";
 	import School from "../svgs/School.svelte";
     import Wrench from "../svgs/Wrench.svelte";
-    const anchorStyles = "w-full flex flex-col items-center justify-center gap-2"
+    const anchorStyles = "w-full flex flex-col items-center justify-center gap-1 py-1"
     export let userData;
 
 </script>

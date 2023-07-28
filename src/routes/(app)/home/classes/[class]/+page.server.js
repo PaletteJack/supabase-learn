@@ -74,30 +74,11 @@ export const load = async ({ params, locals: { sb, userData } }) => {
                     userData: userData,
                     streamed: {
                         cards: getResourceCards(),
-                        journal: getJournal(),
-                        journalList: getAllJournals()
+                        journal: getJournal()
                     }
                 }
             }
         }
-
-    }
-
-    async function getAllJournals() {
-        let { data: journals, error } = await sb
-            .from('journals')
-            .select('*')
-            .eq('class', classID)
-            .eq('owner', userID)
-            .neq('entry_date', date)
-            .then();
-
-        if (error) {
-            console.error('Error getting or creating journal entry: ', error);
-            return
-        }
-
-        return journals;
 
     }
 

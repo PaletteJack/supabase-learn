@@ -26,7 +26,18 @@ export const load = async ({ params, locals: { sb }}) => {
         id,
         entry_date,
         body,
-        edited
+        edited,
+        comments ( 
+            id, 
+            created_at, 
+            edited, 
+            owner: user_data (
+                id,
+                first_name,
+                last_name
+            ),
+            body 
+            )
         `)
         .eq('class', classID)
         .eq('owner', student)
@@ -49,3 +60,29 @@ export const load = async ({ params, locals: { sb }}) => {
         }
     }
 }
+
+export const actions = {
+    addComment: async ({ request, locals: { sb } }) => {
+        const body = Object.fromEntries(await request.formData());
+
+        const { error: err } = await sb
+        .from('comments')
+        .insert({
+            journal: Number(body.journal), 
+            owner: body.owner, 
+            body: body.body
+        })
+
+        if (!err) {
+            return {
+                message: "Comment Added"
+            }
+        }
+
+        console.error("Could not add comment: ", err);
+
+        return fail(500, {
+            message: "There was a problem adding a comment"
+        })
+    }
+};

@@ -1,13 +1,14 @@
 <script>
     import FancyLink from '$lib/components/FancyLink.svelte';
     import Editor from '$lib/components/Editor.svelte';
-    import JournalCard from "$lib/components/JournalCard.svelte"
+    import JournalViewCard from "$lib/components/JournalViewCard.svelte"
     import { ProgressRadial } from '@skeletonlabs/skeleton';
     import StudentsTable from '$lib/components/StudentsTable.svelte';
     import CursorClick from '$lib/svgs/CursorClick.svelte';
     export let data;
 
-    const { classroom, sb } = data;
+    const { classroom, sb, userData } = data;
+    const date = new Date().toLocaleDateString();
     let students;
     let loading = false;
 
@@ -29,6 +30,31 @@
         return null
     }
 
+    let loadingJournals = false;
+    let journalList;
+
+    async function getJournals() {
+        loadingJournals = true;
+
+        const { data: journals, error } = await sb
+        .from('journals')
+        .select('*')
+        .eq('class', classroom.id)
+        .eq('owner', userData.id)
+        .neq('entry_date', date)
+        .neq('body', '')
+
+        if (!error) {
+            loadingJournals = false
+            return journalList = journals;
+        }
+
+        console.log('Error fetching journals: ', error);
+        loadingJournals = false;
+        return null
+
+    }
+
 </script>
 <svelte:head>
     <title>{classroom.name}</title>
@@ -37,6 +63,7 @@
 <div class="container px-10 mx-auto">
     <!-- Will kick off regardless -->
     <h3 class="text-3xl">{classroom.name}</h3>
+    <hr class="opacity-50">
     <p>I am {data.is_owner ? 'an owner' : 'a student'}</p>
     <div class="my-4">
         <h4 class="text-2xl">Cards here</h4>
@@ -67,7 +94,12 @@
         <h4 class="text-2xl font-semibold mb-4 block w-full text-center">Student Journals</h4>
         <div class="w-full">
             {#if !students}
-                <button class="hover:underline relative whitespace-nowrap" type="button" disabled={students ? true : false} on:click={getClassroomStudents}>
+                <button 
+                class="hover:underline relative whitespace-nowrap" 
+                type="button" 
+                disabled={students ? true : false} 
+                on:click={getClassroomStudents}
+                >
                     View Journal Entries 
                     <CursorClick extClasses="absolute -bottom-2 -right-5"/>
                 </button>
@@ -93,7 +125,7 @@
     <!-- default view for students -->
     {#if !data.is_owner}
     <div class="my-4">
-        <p class="text-2xl font-semibold">Current Journal</p>
+        <p class="text-2xl font-semibold mb-2">Current Journal</p>
         <div class="card p-4 mb-8">
             {#await data.streamed.journal}
             <p>loading journal</p>
@@ -104,22 +136,28 @@
             {/await}
         </div>
         <div>
-            <p class="text-2xl font-semibold">Journal history</p>
-            {#await data.streamed.journalList}
-            <p>loading journal list</p>
-            {:then journals}
-                {#if journals.length != 0}
-                <div class="flex flex-col gap-4">
-                    {#each journals as journal (journal.id)}
-                        <JournalCard journal={journal} />
-                    {/each}
-                </div>
-                {:else}
-                    <p>No journals to show!</p>
+            <p class="text-2xl font-semibold mb-2">Journal history</p>
+            <div>
+                {#if !journalList}
+                    <button class="hover:underline" on:click={getJournals}>Load Journals</button>
                 {/if}
-            {:catch err}
-                <p>Could not load current Journal! {err}</p>
-            {/await}
+                {#if loadingJournals}
+                <div class="w-full grid place-items-center">
+                    <ProgressRadial value={undefined} stroke={60} meter="stroke-primary-500" track="stroke-primary-500/30" />
+                </div>
+                {/if}
+                {#if journalList}
+                    {#if journalList.length != 0}
+                        <div class="flex flex-col gap-4">
+                            {#each journalList as journal}
+                                <JournalViewCard journal={journal} />
+                            {/each}
+                        </div>
+                    {:else}
+                        <p>No Journals to show!</p>
+                    {/if}
+                {/if}
+            </div>
         </div>
     </div>
     {/if}
