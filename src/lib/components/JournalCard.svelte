@@ -3,7 +3,7 @@
     import { invalidateAll } from '$app/navigation'
     import { toastStore } from "@skeletonlabs/skeleton";
     import ChatBubble from '../svgs/ChatBubble.svelte';
-    import { slide, fly } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
     import Comment from './Comment.svelte';
     export let journal;
     export let user;

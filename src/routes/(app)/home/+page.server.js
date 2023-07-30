@@ -65,4 +65,27 @@ export const actions = {
             message: `Something went wrong: ${err.message}`
         })
     },
+
+    completeTodo: async ({ request, locals: { sb }}) => {
+        const body = Object.fromEntries(await request.formData())
+
+        console.log(body);
+        
+        // const { error: err } = await sb
+        // .from('todos')
+        // .delete()
+        // .eq('id', Number(body.id))
+        
+        // if (!err) {
+        //     return {
+        //         message: "Todo deleted"
+        //     }
+        // }
+
+        // console.log(err);
+
+        // return fail(500, {
+        //     message: `Something went wrong: ${err.message}`
+        // })
+    },
 }
