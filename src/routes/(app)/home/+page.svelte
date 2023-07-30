@@ -1,6 +1,8 @@
 <script>
+    import ToDo from '$lib/components/ToDo.svelte';
     export let data;
     const { userData } = data;
+    $: todos = data.todos
 </script>
 
 <div class="flex flex-col gap-4">
@@ -9,5 +11,8 @@
         <p>User id: <strong>{userData.id}</strong></p>
         <p>User role: <strong>{userData.role}</strong></p>
         <p>Is a site admin: <strong>{userData.site_admin}</strong></p>
+    </div>
+    <div>
+        <ToDo {todos} />
     </div>
 </div>

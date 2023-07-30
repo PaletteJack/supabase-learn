@@ -3,7 +3,7 @@
     import { invalidateAll } from '$app/navigation'
     import { toastStore } from "@skeletonlabs/skeleton";
     import ChatBubble from '../svgs/ChatBubble.svelte';
-    import { slide } from 'svelte/transition';
+    import { slide, fly } from 'svelte/transition';
     import Comment from './Comment.svelte';
     export let journal;
     export let user;
@@ -39,7 +39,6 @@
                     form.reset()
                     invalidateAll()
                     await applyAction(result)
-                    toastStore.trigger({message: result.data.message, background: "variant-filled-success"})
                     break;
                 case 'failure':
                     toastStore.trigger({message: result.data.message, background: "variant-filled-error"})
@@ -86,7 +85,7 @@
                 <input type="hidden" name="owner" value={user}>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     {#if isEditing}
-                        <textarea class="textarea rounded-none border-none px-2 w-full outline-none mt-4" name="body" />
+                        <textarea class="textarea rounded-none border-l-0 border-r-0 border-t-0 px-2 w-full outline-none mt-4" name="body" />
                         <hr class="opacity-50">
                         <div class="w-full flex flex-row-reverse gap-2 mt-2">
                             <button class="btn btn-sm variant-filled-primary" type="submit">Comment</button>
