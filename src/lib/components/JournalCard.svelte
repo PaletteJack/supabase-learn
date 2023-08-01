@@ -51,8 +51,8 @@
 
 </script>
 
-<div class="card">
-    <header class="card-header variant-filled-secondary rounded-t-3xl flex justify-between items-center px-4 py-2">
+<div class="card rounded-lg">
+    <header class="card-header variant-filled-secondary rounded-t-lg flex justify-between items-center px-4 py-2">
         <p class="font-semibold">{formatDate(journal.entry_date)}</p>
         <button 
         class="btn btn-sm flex gap-2 variant-ringed-tertiary" 
