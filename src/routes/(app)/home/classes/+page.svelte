@@ -8,13 +8,13 @@
     <hr class="mb-2 opacity-50">
     <div class="flex flex-col gap-2">
         {#if isStudent}
-        {#each data.classes as classroom}
-        <a class="hover:underline" href="/home/classes/{classroom.class.id}">{classroom.class.id} - {classroom.class.name}</a>
-        {/each}
+            {#each data.classes as classroom}
+                <a class="hover:underline" href="/home/classes/{classroom.class.id}">{classroom.class.id} - {classroom.class.name}</a>
+            {/each}
         {:else}
-        {#each data.classes as classroom}
-        <a class="hover:underline" href="/home/classes/{classroom.id}">{classroom.id} - {classroom.name}</a>
-        {/each}
+            {#each data.classes as classroom}
+                <a class="hover:underline" href="/home/classes/{classroom.id}">{classroom.id} - {classroom.name}</a>
+            {/each}
         {/if}
     </div>
 </div>

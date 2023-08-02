@@ -85,6 +85,7 @@
                             on:change={() => completeTodo(todo.id, todo.is_completed)}
                             />
                             <span
+                            class="flex-1"
                             class:line-through={todo.is_completed}
                             class:text-primary-700-200-token={todo.is_completed}
                             >

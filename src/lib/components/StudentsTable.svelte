@@ -16,7 +16,7 @@
     }
 </script>
 <div class="table-container rounded-none max-h-[500px]">
-	<table class="table table-interactive rounded-b-none">
+	<table class="table table-interactive rounded-b-none rounded-t-lg">
 		<thead>
 			<tr>
 				<th class="table-cell-fit">First Name</th>
@@ -35,7 +35,7 @@
 		</tbody>
 	</table>
 	<div class="w-full flex">
-		<input class="input px-4 py-2 rounded-none rounded-bl-2xl border-0 border-r-[1px]" type="text" bind:value={firstNameFilter} placeholder="Filter by first name" />
-		<input class="input px-4 py-2 rounded-none rounded-br-2xl border-0 border-l-[1px]" type="text" bind:value={lastNameFilter} placeholder="Filter by last name" />
+		<input class="input px-4 py-2 rounded-none rounded-bl-lg border-0 border-r-[1px]" type="text" bind:value={firstNameFilter} placeholder="Filter by first name" />
+		<input class="input px-4 py-2 rounded-none rounded-br-lg border-0 border-l-[1px]" type="text" bind:value={lastNameFilter} placeholder="Filter by last name" />
 	</div>
 </div>

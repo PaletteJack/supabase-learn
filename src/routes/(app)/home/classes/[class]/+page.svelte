@@ -43,6 +43,7 @@
         .eq('owner', userData.id)
         .neq('entry_date', date)
         .neq('body', '')
+        .order('entry_date', { ascending: false })
 
         if (!error) {
             loadingJournals = false

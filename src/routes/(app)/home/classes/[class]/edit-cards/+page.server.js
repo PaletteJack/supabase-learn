@@ -1,7 +1,7 @@
-import { fail } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 
 
-export const load = async ({ params, locals: { sb }}) => {
+export const load = async ({ params, locals: { sb, userData }}) => {
     const classID = await Number(params.class);
 
     async function getResourceCards() {
@@ -20,6 +20,25 @@ export const load = async ({ params, locals: { sb }}) => {
         return null
     }
 
+    if (!userData.site_admin) {
+
+        const { data, error: err } = await sb
+        .from('classrooms')
+        .select('*')
+        .eq('id', classID)
+        .eq('owner', userData.id)
+
+        if (!data || data.length == 0) {
+            console.log(err);
+            throw error(401, {message: "You do not have permission to access this page."})
+        }
+
+        return {
+            classID: classID,
+            cards: await getResourceCards(),
+        }
+    }
+
     return {
         classID: classID,
         cards: await getResourceCards(),
@@ -32,7 +51,6 @@ export const actions = {
         const { classroom, name, link, icon } = body
         let imageLink = "https://epalnbncirlkzxastmpe.supabase.co/storage/v1/object/public/link-icons/";
 
-        // upload image to storage bucket
         const { data: iconResult, error: iconError} = await sb
         .storage
         .from('link-icons')
@@ -45,14 +63,12 @@ export const actions = {
             console.error('Have an error: ', iconError);
         }
 
-        // get image path
         if (iconResult) {
             imageLink = imageLink + iconResult.path
         } else {
             imageLink = null
         }
 
-        // check for highest value of sort order
         const { data: maxSortOrderData, error: maxSortOrderError } = await sb
         .from('resource_cards')
         .select('sort_order')
@@ -69,7 +85,6 @@ export const actions = {
 
         const newSortOrder = maxSortOrderData.length > 0 ? maxSortOrderData[0].sort_order + 1 : 1;
 
-        // create new card record
         const { error: err } = await sb
         .from('resource_cards')
         .insert({classroom: classroom, name: name, link: link, icon: imageLink, sort_order: newSortOrder})
@@ -94,7 +109,6 @@ export const actions = {
         delete body.oldData
         let newData = {}
 
-        // find differences in old vs new data
         for (let key in body) {
             if (typeof body[key] === 'string' && ['true', 'false'].includes(body[key])) {
                 body[key] = body[key] === 'true';
@@ -125,7 +139,6 @@ export const actions = {
 
         // console.log(newData);
 
-        // update card
         const { error: err } = await sb
         .from('resource_cards')
         .update(newData)

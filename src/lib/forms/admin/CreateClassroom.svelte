@@ -3,13 +3,7 @@
     import { invalidateAll } from '$app/navigation'
     import { toastStore } from "@skeletonlabs/skeleton";
     export let teachers
-    export let schools
-
-    let currentSchool;
-    let currentTeacher;
-
-    $: isEmptyValue = !currentSchool || !currentTeacher
-    $: isMatching = currentSchool == currentTeacher && !isEmptyValue
+    export let school
 
     function submitForm({ form, data, action, cancel }) {
       const { name, owner, school } = Object.fromEntries(data)
@@ -45,17 +39,9 @@
     <select class="select" name="owner">
         <option value={null} disabled selected> Select Teacher</option>
         {#each teachers as teacher}
-            <option value={teacher.id} on:mouseup={() => currentTeacher = teacher.school.id}>{teacher.first_name} {teacher.last_name}</option>
+            <option value={teacher.id}>{teacher.first_name} {teacher.last_name}</option>
         {/each}
     </select>
-    <select class="select" name="school">
-        <option value={null} disabled selected>Select School</option>
-        {#each schools as school}
-            <option value={school.id} on:mouseup={() => currentSchool= school.id}>{school.name}</option>
-        {/each}
-    </select>
-    <button class="btn variant-filled-tertiary" disabled={!isMatching}>Add Classroom</button>
+    <input type="hidden" name="school" value={school}>
+    <button class="btn variant-filled-tertiary">Add Classroom</button>
 </form>
-<p class="text-center py-2 rounded-full shadow-sm mt-4 {isMatching ? 'input-success' : 'input-warning'}">
-    {isMatching ? 'Looks Good!' : "Teacher is not a part of this school"}
-</p>

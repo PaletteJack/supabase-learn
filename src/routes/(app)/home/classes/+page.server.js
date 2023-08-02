@@ -4,16 +4,19 @@ import { fail } from '@sveltejs/kit'
 export const load = async ({ locals: { sb, userData } }) => {
     const id = userData.id
     const userRole = userData.role;
+    const schoolID = userData.school.id
 
     if (userRole === "Teacher") {
         const { data, error } = await sb
         .from('classrooms')
         .select('*')
+        .eq('school', schoolID)
         .eq('owner', id)
 
         if (!error) {
             return {
-                classes: data
+                classes: data,
+                isStudent: false
             }
         }
         
@@ -37,7 +40,8 @@ export const load = async ({ locals: { sb, userData } }) => {
 
         if (!error) {
             return {
-                classes: data
+                classes: data,
+                isStudent: false
             }
         }
 

@@ -10,7 +10,7 @@
 </style>
 
 
-<div class="card-wrapper snap-start shrink-0 card">
+<div class="card-wrapper snap-start shrink-0 card rounded-lg">
     <header class="card-header text-lg font-semibold">{item.title}</header>
     <section class="p-3">{item.body}</section>
     <hr>

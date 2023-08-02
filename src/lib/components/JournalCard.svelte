@@ -66,11 +66,11 @@
         <div class="w-full mt-4">
             {#if journal.comments}
                 {#if journal.comments.length != 0}
-                <div class="flex justify-between mb-4">
-                    <p class="text-xl">Comments</p>
+                <div class="flex justify-between">
+                    <p class="text-xl font-semibold">Comments</p>
                     <button class="hover:underline" type="button" on:click={toggleHide}>{hideComments ? 'Show comments' : 'Hide comments'}</button>
                 </div>
-                <!-- <hr class="opacity-50 mb-4"> -->
+                <hr class="opacity-50 mb-4">
                     {#if !hideComments}
                         <div class="flex flex-col gap-4" transition:slide>
                             {#each journal.comments as comment}

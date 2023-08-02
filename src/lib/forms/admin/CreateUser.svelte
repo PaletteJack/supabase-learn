@@ -5,6 +5,7 @@
     import { invalidateAll } from '$app/navigation'
     import { toastStore } from "@skeletonlabs/skeleton";
     let revealed = false
+    export let school;
 
     const toggleVisibility = () => revealed = !revealed;
 
@@ -55,6 +56,7 @@
 
 <form action="?/createUser" method="POST" class="flex flex-col gap-4" use:enhance={submitForm}>
     <p>Single User Form</p>
+    <input type="hidden" name="school" value={school}>
     <input class="input px-4 py-2" type="email" name="email" placeholder="email">
     <div class="input-group input-group-divider grid-cols-[1fr_auto]">
       <input class="input px-4 py-2" type="{revealed ? 'text' : 'password'}" name="password" placeholder="password">

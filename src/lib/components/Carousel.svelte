@@ -9,16 +9,16 @@
     function carouselLeft(){
     	const x =
     		elemCarousel.scrollLeft === 0
-    			? elemCarousel.clientWidth * elemCarousel.childElementCount // loop
-    			: elemCarousel.scrollLeft - elemCarousel.clientWidth; // step left
+    			? elemCarousel.clientWidth * elemCarousel.childElementCount
+    			: elemCarousel.scrollLeft - elemCarousel.clientWidth;
     	elemCarousel.scroll(x, 0);
     }
 
     function carouselRight(){
     	const x =
     		elemCarousel.scrollLeft === elemCarousel.scrollWidth - elemCarousel.clientWidth
-    			? 0 // loop
-    			: elemCarousel.scrollLeft + elemCarousel.clientWidth; // step right
+    			? 0
+    			: elemCarousel.scrollLeft + elemCarousel.clientWidth;
     	elemCarousel.scroll(x, 0);
     }
 

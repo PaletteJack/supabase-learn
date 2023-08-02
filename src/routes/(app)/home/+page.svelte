@@ -41,13 +41,11 @@
 
     async function handleComplete(event) {
         const newData = event.detail
-        console.log(newData);
 
-        const { data, error } = await sb
+        const { error } = await sb
         .from('todos')
         .update({is_completed: newData.is_completed})
         .eq('id', newData.id)
-        .select()
 
         if (!error) {
             return
