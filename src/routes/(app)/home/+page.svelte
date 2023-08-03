@@ -3,41 +3,8 @@
     import Carousel from '$lib/components/Carousel.svelte';
     import { toastStore } from '@skeletonlabs/skeleton';
     export let data;
-    const { userData, sb } = data;
+    const { userData, sb, announcements } = data;
     $: todos = data.todos
-
-    const announcements = [
-        {
-            id: 1,
-            title: "This is the title",
-            body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis voluptate porro veritatis aut deleniti culpa voluptatibus facere iusto nesciunt! Eveniet nostrum odio eos vitae inventore facilis ut ad quam eaque!"
-        },
-        {
-            id: 2,
-            title: "Title two",
-            body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis voluptate porro veritatis aut deleniti culpa voluptatibus facere iusto nesciunt! Eveniet nostrum odio eos vitae inventore facilis ut ad quam eaque!"
-        },
-        {
-            id: 3,
-            title: "Third Title",
-            body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis voluptate porro veritatis aut deleniti culpa voluptatibus facere iusto nesciunt! Eveniet nostrum odio eos vitae inventore facilis ut ad quam eaque!"
-        },
-        {
-            id: 4,
-            title: "Another title but just a little longer",
-            body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis voluptate porro veritatis aut deleniti culpa voluptatibus facere iusto nesciunt! Eveniet nostrum odio eos vitae inventore facilis ut ad quam eaque!"
-        },
-        {
-            id: 5,
-            title: "I can't believe it's another title",
-            body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis voluptate porro veritatis aut deleniti culpa voluptatibus facere iusto nesciunt! Eveniet nostrum odio eos vitae inventore facilis ut ad quam eaque!"
-        },
-        {
-            id: 6,
-            title: "Title, i am your father",
-            body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis voluptate porro veritatis aut deleniti culpa voluptatibus facere iusto nesciunt! Eveniet nostrum odio eos vitae inventore facilis ut ad quam eaque!"
-        },
-    ]
 
     async function handleComplete(event) {
         const newData = event.detail

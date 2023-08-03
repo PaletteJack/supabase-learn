@@ -2,22 +2,40 @@ import { fail, redirect } from '@sveltejs/kit'
 
 export const load = async ({ locals: { sb, userData } }) => {
     const id = userData.id
+    const schoolID = userData.school.id
 
-    const { data: todos, error: err } = await sb
-    .from('todos')
-    .select('*')
-    .eq('owner', id)
+    async function getTodos() {
+        const { data, error } = await sb
+        .from('todos')
+        .select('*')
+        .eq('owner', id)
 
-    if (!err) {
-        return {
-            todos
+        if (!error) {
+            return data
         }
+
+        console.error('There was a problem loading the todos: ', error);
+        return null
     }
 
-    console.error('There was a problem loading the todos: ', err);
+    async function getAnnouncements() {
+        const { data, error } = await sb
+        .from('announcements')
+        .select('*')
+        .eq('school', schoolID)
+
+
+        if (!error) {
+            return data
+        }
+
+        console.error('There was a problem loading the announcements: ', error);
+        return null
+    }
 
     return {
-        todos: null
+        todos: await getTodos(),
+        announcements: await getAnnouncements()
     }
 }
 

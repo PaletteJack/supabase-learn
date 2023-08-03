@@ -11,8 +11,9 @@
     <h3 class="h3">Which school would you like to work on?</h3>
     {#if schools.length != 0}
         <div class="flex flex-col my-8">
+            <p class="font-bold text-xl">All Schools</p>
             {#each schools as school}
-            <a class="hover:underline" href="/home/admin/{school.id}">{school.name}</a>
+            <a class="hover:scale-[102%] transition-all variant-glass-primary px-2 shadow-md" href="/home/admin/{school.id}">{school.name}</a>
             {/each}
         </div>
     {/if}
