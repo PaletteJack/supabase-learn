@@ -3,6 +3,7 @@ import { fail, redirect } from '@sveltejs/kit'
 export const load = async ({ locals: { sb, userData } }) => {
     const id = userData.id
     const schoolID = userData.school.id
+    const date = new Date().toISOString().split('T')[0]
 
     async function getTodos() {
         const { data, error } = await sb
@@ -22,6 +23,8 @@ export const load = async ({ locals: { sb, userData } }) => {
         const { data, error } = await sb
         .from('announcements')
         .select('*')
+        .lte('start_date', date)
+        .gte('exp_date', date)
         .eq('school', schoolID)
 
 

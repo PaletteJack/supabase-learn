@@ -27,7 +27,13 @@
 <div class="flex flex-col gap-4">
     <div>
         <h2 class="h2">Announcements</h2>
-        <Carousel {announcements} />
+        {#if announcements}
+            {#if announcements.length != 0}
+                <Carousel {announcements} />
+            {/if}
+        {:else}
+            <p>No announcements to show</p>
+        {/if}
     </div>
     <div>
         <h2 class="h2">User Info</h2>
