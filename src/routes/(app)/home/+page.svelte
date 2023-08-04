@@ -24,7 +24,7 @@
     }
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 p-4">
     <div>
         <h2 class="h2">Announcements</h2>
         {#if announcements}

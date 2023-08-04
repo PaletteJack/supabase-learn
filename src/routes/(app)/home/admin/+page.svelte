@@ -12,9 +12,11 @@
     {#if schools.length != 0}
         <div class="flex flex-col my-8">
             <p class="font-bold text-xl">All Schools</p>
-            {#each schools as school}
-            <a class="hover:scale-[102%] transition-all variant-glass-primary px-2 shadow-md" href="/home/admin/{school.id}">{school.name}</a>
-            {/each}
+            <div class="flex flex-col gap-2">
+                {#each schools as school}
+                <a class="hover:scale-[101%] transition-all variant-glass-primary px-4 py-2 shadow-md" href="/home/admin/{school.id}/user-management">{school.name}</a>
+                {/each}
+            </div>
         </div>
     {/if}
 

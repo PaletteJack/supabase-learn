@@ -16,7 +16,7 @@ slotFooter="h-fit lg:h-0">
 	<svelte:fragment slot="pageHeader">
     </svelte:fragment>
 	<!-- Router Slot -->
-    <div class="w-full h-full overflow-hidden p-4">
+    <div class="w-full h-full overflow-hidden">
         <slot />
     </div>
 	<!-- ---- / ---- -->

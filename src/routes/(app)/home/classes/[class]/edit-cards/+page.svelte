@@ -1,7 +1,7 @@
 <script>
     import EditFancyLink from '$lib/components/EditFancyLink.svelte';
     import SortableList from '$lib/components/SortableList.svelte';
-    import CreateCard from '$lib/forms/CreateCard.svelte';
+    import CreateCard from '$lib/forms/card-mgmt/CreateCard.svelte';
     import DocumentPlus from '$lib/svgs/DocumentPlus.svelte';
     import { Accordion, AccordionItem, toastStore } from '@skeletonlabs/skeleton';
     export let data;

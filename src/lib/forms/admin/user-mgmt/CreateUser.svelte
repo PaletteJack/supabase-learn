@@ -76,7 +76,7 @@
     <p>Personal Info</p>
     <input class="input px-4 py-2" type="text" name="firstName" placeholder="first name">
     <input class="input px-4 py-2" type="text" name="lastName" placeholder="last name">
-    <select class="select" name="role">
+    <select class="select px-4 py-2" name="role">
       <option value={null}>select a role</option>
       <option value="student">Student</option>
       <option value="teacher">Teacher</option>

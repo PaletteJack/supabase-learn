@@ -9,7 +9,13 @@
     export let user;
 
     function formatDate(entryDate) {
-        const options = { weekday:"long", year:"numeric", month:"short", day:"numeric"}
+        const entryDateYear = Number(entryDate.split("-")[0])
+        const currentYear = new Date().getFullYear()
+        const options = { weekday:"long", month:"long", day:"numeric"}
+        if (currentYear != entryDateYear) {
+            options.year = "numeric";
+            options.month = "short";
+        }
         const newDate = new Date(entryDate).toLocaleDateString('en-us', options);
         return newDate;
     }
@@ -21,7 +27,7 @@
     }
 
     let isEditing = false;
-    let hideComments = false;
+    let hideComments = true;
 
     const toggleHide = () => hideComments = !hideComments
 
@@ -63,16 +69,25 @@
     </header>
     <section class="p-4">
         <p name="body">{@html journal.body}</p>
+        <div class="flex flex-row-reverse px-4 py-2 mt-4">
+            <p class="text-sm">
+                Last Edit: 
+                <span class="font-semibold">{journal.edited ? formateTimeStamp(journal.edited) : 'Never'}
+                </span>
+            </p>
+        </div>
+    </section>
+    <hr class="opacity-50">
+    <footer class="card-footer">
         <div class="w-full mt-4">
             {#if journal.comments}
                 {#if journal.comments.length != 0}
-                <div class="flex justify-between">
+                <div class="flex justify-between mb-4">
                     <p class="text-xl font-semibold">Comments</p>
                     <button class="hover:underline" type="button" on:click={toggleHide}>{hideComments ? 'Show comments' : 'Hide comments'}</button>
                 </div>
-                <hr class="opacity-50 mb-4">
                     {#if !hideComments}
-                        <div class="flex flex-col gap-4" transition:slide>
+                        <div class="flex flex-col gap-4 ml-4" transition:slide>
                             {#each journal.comments as comment}
                             <Comment {comment}/>
                             {/each}
@@ -99,13 +114,5 @@
                     {/if}
             </form>
         </div>
-    </section>
-    <hr class="opacity-50">
-    <footer class="card-footer flex flex-row-reverse px-4 py-2">
-        <p class="text-sm">
-            Last Edit: 
-            <span class="font-semibold">{journal.edited ? formateTimeStamp(journal.edited) : 'Never'}
-            </span>
-        </p>
     </footer>
 </div>

@@ -36,7 +36,7 @@
         <span>Classroom Name</span>
         <input class="input px-4 py-2" type="text" name="name" placeholder="Mrs. Peterson's 7th Grade">
     </label>
-    <select class="select" name="owner">
+    <select class="select px-4 py-2" name="owner">
         <option value={null} disabled selected> Select Teacher</option>
         {#each teachers as teacher}
             <option value={teacher.id}>{teacher.first_name} {teacher.last_name}</option>

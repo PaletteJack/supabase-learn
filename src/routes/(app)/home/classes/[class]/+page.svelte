@@ -61,7 +61,7 @@
     <title>{classroom.name}</title>
 </svelte:head>
 
-<div class="container px-10 mx-auto">
+<div class="p-4">
     <!-- Will kick off regardless -->
     <h3 class="text-3xl">{classroom.name}</h3>
     <hr class="opacity-50">

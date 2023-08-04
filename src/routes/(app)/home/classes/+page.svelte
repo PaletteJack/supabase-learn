@@ -3,7 +3,7 @@
     const { isStudent } = data
 </script>
 
-<div class="container px-10 mx-auto">
+<div class="p-4">
     <h3 class="text-3xl">All classes</h3>
     <hr class="mb-2 opacity-50">
     <div class="flex flex-col gap-2">

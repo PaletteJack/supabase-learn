@@ -3,7 +3,7 @@
 	import Home from "../svgs/Home.svelte";
 	import Logout from "../svgs/Logout.svelte";
 	import Gear from "../svgs/Gear.svelte";
-	import School from "../svgs/School.svelte";
+	import AcademicCap from "../svgs/AcademicCap.svelte";
 	import Wrench from "../svgs/Wrench.svelte";
     import { page } from "$app/stores"
 	export let userData;
@@ -24,7 +24,7 @@
 		<span>Home</span>
 	</AppRailAnchor>
 	<AppRailAnchor href="/home/classes" title="Classes" selected={$page.url.pathname.includes('/home/classes')}>
-		<svelte:fragment slot="lead"><School /></svelte:fragment>
+		<svelte:fragment slot="lead"><AcademicCap /></svelte:fragment>
 		<span>Classes</span>
 	</AppRailAnchor>
 	<AppRailAnchor href="/home/settings" title="Admin" selected={$page.url.pathname.includes('/home/settings')}>

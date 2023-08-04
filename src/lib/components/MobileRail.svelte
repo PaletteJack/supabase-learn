@@ -4,7 +4,7 @@
     import Home from "../svgs/Home.svelte";
 	import Logout from "../svgs/Logout.svelte";
 	import Gear from "../svgs/Gear.svelte";
-	import School from "../svgs/School.svelte";
+    import AcademicCap from "../svgs/AcademicCap.svelte";
     import Wrench from "../svgs/Wrench.svelte";
     const anchorStyles = "w-full flex flex-col items-center justify-center gap-1 py-1"
     export let userData;
@@ -28,7 +28,7 @@
 </TabAnchor>
 <TabAnchor href="/home/classes" selected={$page.url.pathname.includes('/home/classes')}>
     <div class={anchorStyles}>
-        <School />
+        <AcademicCap />
         <span>Classes</span>
     </div>
 </TabAnchor>
