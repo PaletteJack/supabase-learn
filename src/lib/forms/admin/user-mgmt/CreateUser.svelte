@@ -32,7 +32,7 @@
         cancel()
       }
 
-      if (!password || password < 3) {
+      if (password && password < 3) {
           toastStore.trigger({message: "Password is too short", background: "variant-filled-warning"})
           cancel()
       }
@@ -59,7 +59,7 @@
     <input type="hidden" name="school" value={school}>
     <input class="input px-4 py-2" type="email" name="email" placeholder="email">
     <div class="input-group input-group-divider grid-cols-[1fr_auto]">
-      <input class="input px-4 py-2" type="{revealed ? 'text' : 'password'}" name="password" placeholder="password">
+      <input class="input px-4 py-2" type="{revealed ? 'text' : 'password'}" name="password" placeholder="password (optional)">
       <button 
       class:variant-soft-primary={revealed} 
       class="input-group-shim variant-filled-primary transition-all" 

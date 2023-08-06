@@ -1,10 +1,10 @@
-
+import { fail } from '@sveltejs/kit';
 
 export const load = async ({ params, locals: { sb }}) => {
 
     const schoolID = await Number(params.school);
 
-    async function getSchoolUsers() {
+    async function getTeachers() {
         const { data, error } = await sb
         .from('user_data')
         .select(`
@@ -12,6 +12,24 @@ export const load = async ({ params, locals: { sb }}) => {
         first_name,
         last_name,
         role
+        `)
+        .eq('school', schoolID)
+        .eq('role', 'Teacher')
+
+        if (!error) {
+            return data
+        }
+
+        return null
+    }
+
+    async function getClasses() {
+        const { data, error } = await sb
+        .from('classrooms')
+        .select(`
+        id,
+        owner ( id, first_name, last_name ),
+        name
         `)
         .eq('school', schoolID)
 
@@ -23,7 +41,8 @@ export const load = async ({ params, locals: { sb }}) => {
     }
 
     return {
-        schoolUsers: await getSchoolUsers()
+        teachers: await getTeachers(),
+        classes: await getClasses()
     }
 
 }

@@ -1,5 +1,6 @@
 <script>
     import Papa from 'papaparse';
+    export let school;
     let tmpData = [];
     let haveData = false;
     let file;
@@ -63,6 +64,7 @@
   <button class="btn variant-filled-warning" on:click={clearData}>Clear</button>
   <form action="?/bulkCreate" method="POST">
     <input type="hidden" name="parsedData" value={JSON.stringify(tmpData)}>
+    <input type="hidden" name="school" value={school}>
     <button class="btn variant-filled-success">Submit users</button>
   </form>
 </div>

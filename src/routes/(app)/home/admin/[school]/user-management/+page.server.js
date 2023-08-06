@@ -1,7 +1,9 @@
+import { fail } from '@sveltejs/kit';
+import { adminAuthClient } from '$lib/server/supabase-admin.js';
 
+export const load = async ({ params, locals: { sb, userData }}) => {
 
-export const load = async ({ params, locals: { sb }}) => {
-
+    const id = userData.id
     const schoolID = await Number(params.school);
 
     async function getSchoolUsers() {
@@ -14,6 +16,7 @@ export const load = async ({ params, locals: { sb }}) => {
         role
         `)
         .eq('school', schoolID)
+        .neq('id', id)
 
         if (!error) {
             return data
@@ -82,13 +85,44 @@ export const actions = {
 
     bulkCreate: async ({ request, locals: { sb }}) => {
         const body = Object.fromEntries(await request.formData())
+        const schoolID = body.school;
+        const data = JSON.parse(body.parsedData)
+        const dataList = []
 
-        console.log(body);
+        data.forEach((row) => {
+            const userObject = {
+                email: row.email,
+                password: row.password,
+                meta_data: {
+                    role: row.role,
+                    school: schoolID,
+                    last_name: row.lastName,
+                    first_name: row.firstName,
+                    site_admin: false
+                }
+            }
+
+            dataList.push(userObject);
+        })
+
+        const { error: err } = await sb
+        .rpc('create_users', { users: dataList})
+
+        if(!err) {
+            return {
+                message: "Users created successfully"
+            }
+        }
+
+        console.error("Could not upload users: ", err);
+        return fail(500, {
+            message: `Something went wrong. ${err.message}`
+        })
+
     },
     
-    deleteUser: async ({ request, locals: { sb }}) => {
+    deleteUser: async ({ request }) => {
         const body =  Object.fromEntries(await request.formData())
-
         console.log(body);
     },
 };

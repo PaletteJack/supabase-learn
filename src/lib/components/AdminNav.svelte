@@ -4,7 +4,7 @@
 </script>
 
 <nav class="list-nav shadow-lg">
-    <div class="py-4 variant-glass-tertiary">
+    <div class="py-4 variant-soft-primary">
         <p class="text-3xl font-semibold text-center">{school.name}</p>
         <p class="text-center">Management</p>
     </div>

@@ -61,7 +61,7 @@
     <header class="card-header variant-filled-secondary rounded-t-lg flex justify-between items-center px-4 py-2">
         <p class="font-semibold">{formatDate(journal.entry_date)}</p>
         <button 
-        class="btn btn-sm flex gap-2 variant-ringed-tertiary" 
+        class="btn btn-sm flex gap-2 variant-ringed-secondary" 
         on:click={() => isEditing = true} 
         type="button">
             <ChatBubble /> Add Comment
