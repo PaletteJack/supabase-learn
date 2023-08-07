@@ -48,25 +48,27 @@ export const load = async ({ params, locals: { sb, userData }}) => {
 export const actions = {
     createCard: async ({ request, locals: { sb } }) => {
         const body = Object.fromEntries(await request.formData());
-        const { classroom, name, link, icon } = body
-        let imageLink = "https://epalnbncirlkzxastmpe.supabase.co/storage/v1/object/public/link-icons/";
+        const { classroom, name, link, icon, school, scope } = body
+        let imageLink = null;
 
-        const { data: iconResult, error: iconError} = await sb
-        .storage
-        .from('link-icons')
-        .upload(`${icon.name}`, icon, {
-            cacheControl: "3600",
-            upsert: false
-        })
-
-        if(iconError) {
-            console.error('Have an error: ', iconError);
-        }
-
-        if (iconResult) {
-            imageLink = imageLink + iconResult.path
-        } else {
-            imageLink = null
+        if (icon.size != 0) {
+            const { data: iconResult, error: iconError} = await sb
+            .storage
+            .from('link-icons')
+            .upload(`${icon.name}`, icon, {
+                cacheControl: "3600",
+                upsert: false
+            })
+    
+            if(iconError) {
+                console.error('Have an error: ', iconError);
+            }
+    
+            if (iconResult) {
+                imageLink = "https://epalnbncirlkzxastmpe.supabase.co/storage/v1/object/public/link-icons/" + iconResult.path
+            } else {
+                imageLink = null
+            }
         }
 
         const { data: maxSortOrderData, error: maxSortOrderError } = await sb
@@ -87,7 +89,15 @@ export const actions = {
 
         const { error: err } = await sb
         .from('resource_cards')
-        .insert({classroom: classroom, name: name, link: link, icon: imageLink, sort_order: newSortOrder})
+        .insert({
+            classroom: classroom,
+            name: name, 
+            link: link, 
+            icon: imageLink, 
+            sort_order: newSortOrder,
+            school: Number(school),
+            scope: scope
+        })
         
         if (!err) {
             return {

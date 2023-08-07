@@ -43,6 +43,7 @@
             switch (result.type) {
                 case 'success':
                     form.reset()
+                    hideComments = false
                     invalidateAll()
                     await applyAction(result)
                     break;

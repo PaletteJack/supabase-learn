@@ -25,16 +25,16 @@
 </script>
 
 <div class="flex flex-col gap-4 p-4">
+    {#if announcements}
     <div>
-        <h2 class="h2">Announcements</h2>
-        {#if announcements}
-            {#if announcements.length != 0}
-                <Carousel {announcements} />
-            {/if}
+        <h2 class="h2">Announcements 📢</h2>
+        {#if announcements.length != 0}
+            <Carousel {announcements} />
         {:else}
-            <p>No announcements to show</p>
+            <p>No announcements to show 😭</p>
         {/if}
     </div>
+    {/if}
     <div>
         <h2 class="h2">User Info</h2>
         <p>This is the home page for <strong>{userData.first_name} {userData.last_name}</strong></p>

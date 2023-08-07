@@ -8,6 +8,20 @@
     export let link, icon, name, id, classroom, hidden, sort_order;
 
     const dispatch = createEventDispatcher()
+    const cardInitials = getInitials(name)
+
+    function getInitials(item) {
+        const wordList = item.split(" ");
+        let initials = "";
+        
+        for (let i = 0; i < wordList.length; i++) {
+            if (initials.length >= 2) break;
+            const tmp = wordList[i].slice(0, 1).toUpperCase();
+            initials = initials + tmp;
+        }
+
+        return initials;
+    }
 
     const cardModalComponent = {
         ref: EditCardSettings,
@@ -44,7 +58,7 @@
 class="relative card px-4 py-2 grid grid-cols-[auto_1fr] gap-2 w-full variant-glass-primary rounded-full shadow-lg"
 >
     <div>
-        <Avatar src={icon} width="w-12" rounded="rounded-full"/>
+        <Avatar src={icon} width="w-12" rounded="rounded-full" initials={cardInitials}/>
     </div>
     <div class="flex gap-4 items-center justify-between">
         <div>

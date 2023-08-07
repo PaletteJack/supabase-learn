@@ -23,7 +23,6 @@ export const load = async ({ params, locals: { sb, userData } }) => {
             return {
                 classroom,
                 is_owner: true,
-                userData: userData,
                 streamed: {
                     cards: getResourceCards(),
                 }
@@ -44,7 +43,6 @@ export const load = async ({ params, locals: { sb, userData } }) => {
             return {
                 classroom,
                 is_owner: true,
-                userData: userData,
                 streamed: {
                     cards: getResourceCards()
                 }
@@ -71,7 +69,6 @@ export const load = async ({ params, locals: { sb, userData } }) => {
 
                 return {
                     classroom,
-                    userData: userData,
                     streamed: {
                         cards: getResourceCards(),
                         journal: getJournal()
@@ -119,6 +116,7 @@ export const load = async ({ params, locals: { sb, userData } }) => {
         .select('*')
         .eq('classroom', classID)
         .eq('hidden', false)
+        .eq('scope', 'classroom')
         .order('sort_order', { ascending: true})
 
         if (data) {

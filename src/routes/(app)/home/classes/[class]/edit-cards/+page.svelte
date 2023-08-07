@@ -6,7 +6,7 @@
     import { Accordion, AccordionItem, toastStore } from '@skeletonlabs/skeleton';
     export let data;
 
-    const { sb, classID } = data;
+    const { sb, classID, userData } = data;
     $: cards = data.cards
 
     async function deleteLink(item) {
@@ -75,7 +75,7 @@
             <svelte:fragment slot="lead"><DocumentPlus /> </svelte:fragment>
             <svelte:fragment slot="summary">Add New Card</svelte:fragment>
             <svelte:fragment slot="content">
-                <CreateCard id={classID} />
+                <CreateCard id={classID} school={userData.school.id}/>
             </svelte:fragment>
         </AccordionItem>
     </Accordion>

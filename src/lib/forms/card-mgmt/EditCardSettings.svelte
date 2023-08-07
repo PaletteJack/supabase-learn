@@ -6,6 +6,21 @@
     export let link, icon, name, id, hidden
     export let parent
 
+    const cardInitials = getInitials(name);
+
+    function getInitials(item) {
+        const wordList = item.split(" ");
+        let initials = "";
+        
+        for (let i = 0; i < wordList.length; i++) {
+            if (initials.length >= 2) break;
+            const tmp = wordList[i].slice(0, 1).toUpperCase();
+            initials = initials + tmp;
+        }
+
+        return initials;
+    }
+
     let prevData = {
         id: id,
         icon: icon,
@@ -60,7 +75,7 @@
         <div class="flex flex-col gap-4 py-2">
             <div class="grid grid-cols-[auto_1fr]">
                 <div class="px-4">
-                    <Avatar src={file ?? icon} width="w-16" rounded="rounded-full"/>
+                    <Avatar src={file ?? icon} width="w-16" rounded="rounded-full" initials={cardInitials}/>
                     <button class="btn btn-sm variant-filled-warning" type="button" on:click={clearImage}>Reset</button>
                 </div>
                 <label class="label">
