@@ -3,7 +3,7 @@
 export const cookieSettings = {
     httpOnly: true,
     path: '/',
-    secure: false,
-    sameSite: 'none',
+    secure: true,
+    sameSite: 'lax',
     maxAge: 60 * 60 * 24
 }
