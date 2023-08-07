@@ -15,15 +15,6 @@
     @media screen and (max-width: 400px) {
         #login-box { @apply px-7 }
     }
-
-    #quote-box {
-        background-image: url("pencils.jpg");
-    }
-
-    #quote-wrapper {
-        background-color: rgba(255, 255, 255, 0.2);
-        @apply rounded-lg
-    }
 </style>
 
 <div class="grid lg:grid-cols-[1fr_2fr]">
@@ -54,9 +45,9 @@
         </div>
     </div>
     <div id="quote-box" class="hidden lg:grid place-items-center w-full h-full">
-        <div id="quote-wrapper" class="max-w-[40%] relative px-6 pt-4 pb-6">
-            <p class="absolute -top-5 -left-5 text-9xl text-primary-900 opacity-40">"</p>
-            <p class="text-3xl text-primary-50">I gave Cobalt a try today and I was positively impressed! This is such a great service I think I will leave my wife and kids just to spend more time using it.</p>
+        <div class="max-w-[40%] relative">
+            <p class="absolute -top-8 -left-8 text-9xl text-primary-500-400-token -z-10 opacity-40">"</p>
+            <p class="text-3xl">I gave Cobalt a try today and I was positively impressed! This is such a great service I think I will leave my wife and kids just to spend more time using it.</p>
         </div>
     </div>
 </div>
