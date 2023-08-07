@@ -60,7 +60,6 @@
 </style>
 
 <div class="w-fit todo-container max-h-[600px]">
-    <h2 class="h2">To-dos</h2>
     <button class="mt-2 hover:underline" on:click={() => showForm = true}>Add a to-do:</button>
     {#if showForm}
         <form method="POST" action="?/createTodo" use:enhance={submitForm} transition:slide>

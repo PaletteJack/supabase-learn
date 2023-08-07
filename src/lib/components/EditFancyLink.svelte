@@ -55,7 +55,7 @@
 </script>
 
 <div 
-class="relative card px-4 py-2 grid grid-cols-[auto_1fr] gap-2 w-full variant-glass-primary rounded-full shadow-lg"
+class="relative card px-4 py-2 grid grid-cols-[auto_1fr] gap-2 w-full variant-glass-primary rounded-lg shadow-lg"
 >
     <div>
         <Avatar src={icon} width="w-12" rounded="rounded-full" initials={cardInitials}/>

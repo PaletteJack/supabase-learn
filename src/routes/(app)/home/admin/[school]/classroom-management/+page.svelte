@@ -9,7 +9,7 @@
 </script>
 
 <TabGroup>
-    <Tab bind:group={tabSet} name="create-user" value={0}>
+    <Tab bind:group={tabSet} name="create-classroom" value={0}>
         <span>Create Classroom</span>
     </Tab>
     <Tab bind:group={tabSet} name="manage-classes" value={1}>

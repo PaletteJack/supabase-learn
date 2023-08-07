@@ -74,6 +74,6 @@
 
 <style lang="postcss">
   .over {
-    @apply border-secondary-400 scale-105 rounded-full;
+    @apply border-secondary-400 scale-105 rounded-lg;
   }
 </style>

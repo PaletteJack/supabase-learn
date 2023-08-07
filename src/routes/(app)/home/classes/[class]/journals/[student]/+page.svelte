@@ -11,7 +11,7 @@
         <p class="text-2xl font-semibold text-primary-500-400-token">{student.first_name} {student.last_name}</p>
     </div>
     
-    <div class="flex flex-col gap-4">
+    <div class="grid place-items-center gap-4 container mx-auto">
     {#await data.streamed.journalEntries}
         <p>Loading journals</p>
     {:then journals}

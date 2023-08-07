@@ -34,7 +34,7 @@ export const actions = {
             .single();
 
             cookies.set('user_data', JSON.stringify(userData), cookieSettings)
-            throw redirect(303, '/home')
+            throw redirect(303, '/home');
         }
 
         if (!data.user) {

@@ -55,28 +55,30 @@
     }
     
 </script>
-<a href="/home/classes/{classID}" class="hover:underline">Go back</a>
-<div class="container h-full mx-auto md:px-10 grid lg:grid-cols-2 grid-rows-[auto_1fr]">
-    <div class="my-4">
-        <h4 class="text-2xl text-center">Card Order</h4>
-        {#if cards.length != 0}
-        <SortableList list={cards} on:sort={sortList} let:item let:index>
-            <div class="group relative">
-                <EditFancyLink {...item} on:deleteCard={deleteLink}/>
-            </div>
-        </SortableList>
-        {:else}
-            <p>No cards to show!</p>
-        {/if}
+<div class="p-4">
+    <a href="/home/classes/{classID}" class="hover:underline">Go back</a>
+    <div class="container h-full mx-auto md:px-10 grid lg:grid-cols-2 grid-rows-[auto_1fr]">
+        <div class="my-4">
+            <h4 class="text-2xl text-center">Card Order</h4>
+            {#if cards.length != 0}
+            <SortableList list={cards} on:sort={sortList} let:item let:index>
+                <div class="group relative">
+                    <EditFancyLink {...item} on:deleteCard={deleteLink}/>
+                </div>
+            </SortableList>
+            {:else}
+                <p>No cards to show!</p>
+            {/if}
+        </div>
+        
+        <Accordion>
+            <AccordionItem>
+                <svelte:fragment slot="lead"><DocumentPlus /> </svelte:fragment>
+                <svelte:fragment slot="summary">Add New Card</svelte:fragment>
+                <svelte:fragment slot="content">
+                    <CreateCard id={classID} school={userData.school.id}/>
+                </svelte:fragment>
+            </AccordionItem>
+        </Accordion>
     </div>
-    
-    <Accordion>
-        <AccordionItem>
-            <svelte:fragment slot="lead"><DocumentPlus /> </svelte:fragment>
-            <svelte:fragment slot="summary">Add New Card</svelte:fragment>
-            <svelte:fragment slot="content">
-                <CreateCard id={classID} school={userData.school.id}/>
-            </svelte:fragment>
-        </AccordionItem>
-    </Accordion>
 </div>

@@ -7,14 +7,14 @@
 </script>
 
 
-<div class="container px-10">
-    <h3 class="h3">Which school would you like to work on?</h3>
+<div class="p-4">
+    <h2 class="h2">All Schools 🏫</h2>
+    <hr class="opacity-50">
     {#if schools.length != 0}
         <div class="flex flex-col my-8">
-            <p class="font-bold text-xl">All Schools</p>
             <div class="flex flex-col gap-2">
                 {#each schools as school}
-                <a class="hover:scale-[101%] transition-all variant-glass-primary px-4 py-2 shadow-md" href="/home/admin/{school.id}/user-management">{school.name}</a>
+                <a class="hover:scale-[99%] transition-all variant-glass-primary px-4 py-2 shadow-md" href="/home/admin/{school.id}/user-management">{school.name}</a>
                 {/each}
             </div>
         </div>

@@ -36,7 +36,7 @@
     </div>
     {/if}
     <div>
-        <h2 class="h2">User Info</h2>
+        <h2 class="h2">User Info ℹ️</h2>
         <p>This is the home page for <strong>{userData.first_name} {userData.last_name}</strong></p>
         <p>User id: <strong>{userData.id}</strong></p>
         <p>User role: <strong>{userData.role}</strong></p>
@@ -44,6 +44,7 @@
         <p>School: <strong>{userData.school.name}</strong></p>
     </div>
     <div>
+        <h2 class="h2">To-dos 📃</h2>
         <ToDo {todos} on:complete={handleComplete}/>
     </div>
 </div>

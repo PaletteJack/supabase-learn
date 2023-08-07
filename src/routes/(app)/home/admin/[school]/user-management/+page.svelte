@@ -39,7 +39,7 @@
     <Tab bind:group={tabSet} name="bulk-create" value={1}>
         <span>Bulk Create</span>
     </Tab>
-    <Tab bind:group={tabSet} name="create-classroom" value={2}>
+    <Tab bind:group={tabSet} name="manage-users" value={2}>
         <span>Manage Users</span>
     </Tab>
     <svelte:fragment slot="panel">

@@ -1,5 +1,8 @@
 <script>
     import { page } from "$app/stores"
+	import Users from "../svgs/Users.svelte"
+	import School from "../svgs/School.svelte"
+	import Book from "../svgs/Book.svelte";
     export let school
 </script>
 
@@ -15,7 +18,7 @@
             class:variant-filled-primary={$page.url.pathname == `/home/admin/${school.id}/user-management`}
             class="!rounded-none"
             >
-				<span class="">👥</span>
+				<span class=""><Users /></span>
 				<span class="flex-auto">Users</span>
 			</a>
 		</li>
@@ -25,7 +28,7 @@
             class:variant-filled-primary={$page.url.pathname == `/home/admin/${school.id}/classroom-management`}
             class="!rounded-none"
             >
-				<span class="">🏛️</span>
+				<span class=""><Book /></span>
 				<span class="flex-auto">Classrooms</span>
 			</a>
 		</li>
@@ -35,7 +38,7 @@
             class:variant-filled-primary={$page.url.pathname == `/home/admin/${school.id}/school-management`}
             class="!rounded-none"
             >
-				<span class="">🏫</span>
+				<span class=""><School /></span>
 				<span class="flex-auto">School</span>
 			</a>
 		</li>

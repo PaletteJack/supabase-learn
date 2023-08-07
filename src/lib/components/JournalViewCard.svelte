@@ -15,7 +15,7 @@
 
 </script>
 
-<div class="card rounded-lg">
+<div class="card rounded-lg w-[672px]">
     <header class="card-header variant-filled-secondary rounded-t-lg flex justify-between items-center px-4 py-2">
         <p class="font-semibold">{formatDate(journal.entry_date)}</p>
     </header>

@@ -7,41 +7,40 @@ export const load = async ({ locals: { sb, userData } }) => {
     const schoolID = userData.school.id
 
     if (userRole === "Teacher") {
-        const { data, error } = await sb
+        const { data: teacherData, error: teacherErr } = await sb
         .from('classrooms')
         .select('*')
         .eq('school', schoolID)
         .eq('owner', id)
 
-        if (!error) {
+        if (!teacherErr) {
             return {
-                classes: data,
-                isStudent: false
+                classes: teacherData,
+                isTeacher: true
             }
         }
         
     } else if (userRole === "Student") {
-        const { data, error } = await sb
+        const { data: studentClassrooms, error: studentErr } = await sb
         .from('classroom_students')
         .select('class ( * )')
         .eq('student', id)
 
-        if (!error) {
+        if (!studentErr) {
             return {
-                classes: data,
+                classes: studentClassrooms,
                 isStudent: true
             }
         }
 
     } else if (userRole === "Admin" || userRole == "Site Admin") {
-        const { data, error } = await sb
-        .from('classrooms')
-        .select('*')
+        const { data: adminData, error: adminErr } = await sb
+        .rpc('get_schools_with_classrooms');
 
-        if (!error) {
+        if (!adminErr) {
             return {
-                classes: data,
-                isStudent: false
+                classes: adminData,
+                isAdmin: true
             }
         }
 
