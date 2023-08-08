@@ -99,7 +99,7 @@
                 {/each}
             {:else}
             <li>
-                <p>No to-dos to show. <button class="hover:underline" on:click={() => showForm = true}>Add Todo?</button></p>
+                <p>No to-dos to show. <button class="hover:underline" on:click={() => showForm = true}>Add to-do?</button></p>
             </li>
             {/if}
         {/if}

@@ -34,8 +34,11 @@ export const load = async ({ params, locals: { sb, userData }}) => {
 export const actions = {
     createUser: async ({ request }) => {
         const body = Object.fromEntries(await request.formData());
-        const school = 1
-        const isAdmin = (body.role == 'Site Admin')
+        let isAdmin;
+        if (body.role == 'Site Admin') {
+            isAdmin = true
+            body.role = "Admin"
+        }
 
         const { data, error } = await adminAuthClient.createUser({
             email: body.email,
@@ -45,7 +48,7 @@ export const actions = {
                 first_name: body.firstName,
                 last_name: body.lastName,
                 role: body.role,
-                school: school,
+                school: Number(body.school),
                 site_admin: isAdmin
             }
         })

@@ -4,7 +4,6 @@
     export let data;
 
     const { userData } = data;
-    console.log(modeCurrent);
 </script>
 
 <div class="p-4">
