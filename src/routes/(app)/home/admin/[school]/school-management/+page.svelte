@@ -15,13 +15,15 @@
         <span>Create Announcements</span>
     </Tab>
     <svelte:fragment slot="panel">
-        {#if tabSet === 0}
-        <p>ID: {school.id}</p>
-        <p>School Name: {school.name}</p>
-        <p>Domain: {school.domain}</p>
-        {:else if tabSet == 1}
-        <h3 class="h3">Create Announcement</h3>
-        <CreateAnnouncement school={school.id} user={userData.id} />
-        {/if}
+        <div class="lg:px-12">
+            {#if tabSet === 0}
+            <p>ID: {school.id}</p>
+            <p>School Name: {school.name}</p>
+            <p>Domain: {school.domain}</p>
+            {:else if tabSet == 1}
+            <h3 class="h3">Create Announcement</h3>
+            <CreateAnnouncement school={school.id} user={userData.id} />
+            {/if}
+        </div>
     </svelte:fragment>
 </TabGroup>

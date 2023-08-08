@@ -1,10 +1,9 @@
 <script>
-    export let school
     export let classes
 </script>
 
-{#each classes as classroom}
-    <p>Class ID: {classroom.id}</p>
-    <p>Class Name: {classroom.name}</p>
-    <p>Owner: {classroom.owner.first_name} {classroom.owner.last_name}</p>
-{/each}
+<div class="flex flex-col gap-4">
+    {#each classes as classroom}
+    <a class="hover:underline" href="/home/admin/1/classroom-management/{classroom.id}">{classroom.name}</a>
+    {/each}
+</div>

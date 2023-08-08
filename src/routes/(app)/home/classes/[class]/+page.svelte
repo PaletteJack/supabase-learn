@@ -58,6 +58,16 @@
     }
 
 </script>
+<style lang="postcss">
+    #journal-wrapper {
+        width: min(510px, 100%);
+    }
+
+    #journals-container {
+        width: min(510px, 100%);
+    }
+</style>
+
 <svelte:head>
     <title>{classroom.name}</title>
 </svelte:head>
@@ -65,7 +75,7 @@
 <div class="p-4">
     <h3 class="text-3xl">{classroom.name}</h3>
     <hr class="opacity-50 mb-4">
-    <div class="container mx-auto grid grid-flow-row place-items-center">
+    <div class="container mx-auto grid lg:place-items-center">
         <!-- Will kick off regardless -->
         <div class="my-4">
             <h4 class="text-2xl mb-2">Cards here</h4>
@@ -92,8 +102,8 @@
     
         <!-- If user == owner || admin -->
         {#if data.is_owner}
-        <div class="flex flex-col items-center min-w-[510px] w-fit">
-            <h4 class="text-2xl font-semibold mb-2 block w-full text-center">Student Journals</h4>
+        <div id="journal-wrapper" class="flex flex-col items-center">
+            <h4 class="text-2xl font-semibold mb-2 block w-full lg:text-center">Student Journals</h4>
             <div class="w-full">
                 {#if !students}
                     <button 
@@ -126,7 +136,7 @@
     
         <!-- default view for students -->
         {#if !data.is_owner}
-        <div class="my-4">
+        <div id="journals-container" class="my-4 mx-auto">
             <p class="text-2xl font-semibold mb-2">Current Journal</p>
             <div class="card p-4 mb-8">
                 {#await data.streamed.journal}

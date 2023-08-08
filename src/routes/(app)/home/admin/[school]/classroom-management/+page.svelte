@@ -16,10 +16,12 @@
         <span>Manage classes</span>
     </Tab>
     <svelte:fragment slot="panel">
-        {#if tabSet === 0}
-        <CreateClassroom school={school.id} teachers={teachers} />
-        {:else if tabSet == 1}
-        <ManageClasses school={school.id} classes={classes}/>
-        {/if}
+        <div class="lg:px-12">
+            {#if tabSet === 0}
+            <CreateClassroom school={school.id} teachers={teachers} />
+            {:else if tabSet == 1}
+            <ManageClasses classes={classes}/>
+            {/if}
+        </div>
     </svelte:fragment>
 </TabGroup>

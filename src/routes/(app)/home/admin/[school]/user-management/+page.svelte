@@ -43,12 +43,14 @@
         <span>Manage Users</span>
     </Tab>
     <svelte:fragment slot="panel">
-        {#if tabSet === 0}
-        <CreateUser school={school.id}/>
-        {:else if tabSet === 1}
-        <BulkUserCreate school={school.id}/>
-        {:else if tabSet === 2}
-        <ManageUsers users={schoolUsers} on:deleteUser={handleDeletion}/>
-        {/if}
+        <div class="lg:px-12">
+            {#if tabSet === 0}
+            <CreateUser school={school.id}/>
+            {:else if tabSet === 1}
+            <BulkUserCreate school={school.id}/>
+            {:else if tabSet === 2}
+            <ManageUsers users={schoolUsers} on:deleteUser={handleDeletion}/>
+            {/if}
+        </div>
     </svelte:fragment>
 </TabGroup>

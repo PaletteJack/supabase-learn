@@ -1,5 +1,6 @@
 <script>
     import Papa from 'papaparse';
+    import { downloadCSV } from "$lib/utils.js"
     export let school;
     let tmpData = [];
     let haveData = false;
@@ -71,7 +72,7 @@
 {/if}
 <form on:submit|preventDefault={logData} method="POST" class="flex flex-col gap-4">
     {#if tmpData.length === 0}
-    <p>Upload users from an excel sheet or csv file.</p>
+    <p>Upload users from an excel sheet or csv file. <button class="hover:underline" on:click={downloadCSV}>Download Template</button></p>
     {/if}
     <input id="file-input" class="input" type="file" name="file" accept=".xlsx, .xls, .csv" on:change={changeFile}>
     <button class="btn variant-filled-primary" type="submit">Open File</button>

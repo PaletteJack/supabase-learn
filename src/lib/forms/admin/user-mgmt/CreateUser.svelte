@@ -81,7 +81,6 @@
       <option value="student">Student</option>
       <option value="teacher">Teacher</option>
       <option value="admin">Admin</option>
-      <option value="admin">Site Admin</option>
     </select>
     <button class="btn variant-filled-secondary" type="submit">Submit</button>
 </form>

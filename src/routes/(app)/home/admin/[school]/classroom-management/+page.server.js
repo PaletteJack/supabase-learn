@@ -28,7 +28,6 @@ export const load = async ({ params, locals: { sb }}) => {
         .from('classrooms')
         .select(`
         id,
-        owner ( id, first_name, last_name ),
         name
         `)
         .eq('school', schoolID)

@@ -15,7 +15,7 @@
 		<li>
 			<a 
             href="/home/admin/{school.id}/user-management"
-            class:variant-filled-primary={$page.url.pathname == `/home/admin/${school.id}/user-management`}
+            class:variant-filled-primary={$page.url.pathname.includes(`/home/admin/${school.id}/user-management`)}
             class="!rounded-none"
             >
 				<span class=""><Users /></span>
@@ -25,7 +25,7 @@
 		<li>
 			<a 
             href="/home/admin/{school.id}/classroom-management"
-            class:variant-filled-primary={$page.url.pathname == `/home/admin/${school.id}/classroom-management`}
+            class:variant-filled-primary={$page.url.pathname.includes(`/home/admin/${school.id}/classroom-management`)}
             class="!rounded-none"
             >
 				<span class=""><Book /></span>
@@ -35,7 +35,7 @@
 		<li>
 			<a 
             href="/home/admin/{school.id}/school-management"
-            class:variant-filled-primary={$page.url.pathname == `/home/admin/${school.id}/school-management`}
+            class:variant-filled-primary={$page.url.pathname.includes(`/home/admin/${school.id}/school-management`)}
             class="!rounded-none"
             >
 				<span class=""><School /></span>
