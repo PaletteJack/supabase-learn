@@ -1,8 +1,9 @@
 <script>
-    import { Avatar } from "@skeletonlabs/skeleton";
+    import { Avatar, getModalStore, getToastStore } from "@skeletonlabs/skeleton";
     import { enhance, applyAction } from "$app/forms"
     import { invalidateAll } from "$app/navigation";
-    import { toastStore, modalStore } from '@skeletonlabs/skeleton';
+    const toastStore = getToastStore();
+    const modalStore = getModalStore()
     export let link, icon, name, id, hidden
     export let parent
 

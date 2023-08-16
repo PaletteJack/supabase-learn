@@ -1,6 +1,7 @@
 <script>
-    import { toastStore } from "@skeletonlabs/skeleton";
+    import { getToastStore } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
+    const toastStore = getToastStore();
     export let form
 
     onMount(() => {

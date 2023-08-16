@@ -3,9 +3,9 @@
     import { fly, slide, fade } from 'svelte/transition';
 	import { enhance, applyAction } from '$app/forms';
     import { invalidateAll } from '$app/navigation'
-    import { toastStore } from '@skeletonlabs/skeleton';
+    import { getToastStore } from '@skeletonlabs/skeleton';
     import Trash from '../svgs/Trash.svelte';
-
+    const toastStore = getToastStore();
     const dispatch = createEventDispatcher();
 
     export let todos;

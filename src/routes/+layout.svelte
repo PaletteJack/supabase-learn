@@ -1,14 +1,12 @@
 <script>
-  // import '@skeletonlabs/skeleton/themes/theme-modern.css';
-  import "../theme.postcss"
-  import '@skeletonlabs/skeleton/styles/skeleton.css';
   import '../app.postcss';
-  import { storePopup, Toast, Modal } from '@skeletonlabs/skeleton';
+  import { initializeStores, Toast, Modal, Drawer, storePopup } from '@skeletonlabs/skeleton';
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
   import { invalidate } from "$app/navigation"
   import { onMount } from 'svelte';
   export let data;
 
+  initializeStores();
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   let { sb, session } = data;
@@ -30,5 +28,6 @@
 
 <Toast />
 <Modal />
+<Drawer />
 
 <slot />

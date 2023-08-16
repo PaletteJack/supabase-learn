@@ -3,7 +3,8 @@
     import SortableList from '$lib/components/SortableList.svelte';
     import CreateCard from '$lib/forms/card-mgmt/CreateCard.svelte';
     import DocumentPlus from '$lib/svgs/DocumentPlus.svelte';
-    import { Accordion, AccordionItem, toastStore } from '@skeletonlabs/skeleton';
+    import { Accordion, AccordionItem, getToastStore } from '@skeletonlabs/skeleton';
+    const toastStore = getToastStore();
     export let data;
 
     const { sb, classID, userData } = data;

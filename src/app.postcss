@@ -1,4 +1,9 @@
-/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+/*! purgecss start ignore */
 @font-face {
 	font-family: 'Quicksand';
 	src: url('/fonts/Quicksand-VariableFont_wght.ttf');
@@ -11,3 +16,37 @@ div.ProseMirror { @apply bg-white rounded-t-2xl px-4 py-2 outline-none min-h-[20
 input {
     outline: none !important;
   }
+
+[data-theme='cobalt'] h1,
+[data-theme='cobalt'] h2,
+[data-theme='cobalt'] h3,
+[data-theme='cobalt'] h4,
+[data-theme='cobalt'] h5,
+[data-theme='cobalt'] h6,
+[data-theme='cobalt'] a,
+[data-theme='cobalt'] button {
+	@apply font-semibold
+}
+
+[data-theme='cobalt'] {
+	background-image:
+		radial-gradient(at 52% 43%, hsla(157,75%,68%,0.16) 0px, transparent 50%),
+		radial-gradient(at 23% 93%, hsla(195,98%,66%,0.43) 0px, transparent 50%),
+		radial-gradient(at 80% 0%, hsla(145,85%,54%,0.27) 0px, transparent 50%),
+		radial-gradient(at 100% 100%, hsla(360,0%,100%,1) 0px, transparent 50%);
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.dark [data-theme='cobalt'] {
+	background-image:
+		radial-gradient(at 76% 0%, hsla(189,100%,56%,0.20) 0px, transparent 50%),
+		radial-gradient(at 1% 0%, hsla(340,100%,76%,0.15) 0px, transparent 50%),
+		radial-gradient(at 20% 100%, hsla(241,100%,70%,0.30) 0px, transparent 50%);
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+/*! purgecss end ignore */

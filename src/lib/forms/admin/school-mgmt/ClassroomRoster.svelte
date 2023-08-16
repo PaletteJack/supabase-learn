@@ -1,7 +1,8 @@
 <script>
     import { createEventDispatcher } from "svelte";
     import X from "$lib/svgs/X.svelte";
-    import { modalStore } from "@skeletonlabs/skeleton";
+    import { getModalStore } from "@skeletonlabs/skeleton";
+    const modalStore = getModalStore();
     export let classroom
     export let students
 

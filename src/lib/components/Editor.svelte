@@ -7,7 +7,8 @@
     import ArrowRight from "../svgs/ArrowRight.svelte";
     import { writable } from "svelte/store";
     import { enhance, applyAction } from '$app/forms';
-    import { toastStore } from '@skeletonlabs/skeleton';
+    import { getToastStore } from '@skeletonlabs/skeleton';
+    const toastStore = getToastStore();
     export let id;
     export let content;
     let element

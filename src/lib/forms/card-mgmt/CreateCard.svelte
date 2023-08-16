@@ -1,7 +1,8 @@
 <script>
     import { enhance, applyAction } from "$app/forms"
     import { invalidateAll } from "$app/navigation";
-    import { toastStore } from '@skeletonlabs/skeleton';
+    import { getToastStore, } from '@skeletonlabs/skeleton';
+    const toastStore = getToastStore();
     export let id;
     export let school;
 

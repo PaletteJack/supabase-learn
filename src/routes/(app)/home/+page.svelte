@@ -1,7 +1,8 @@
 <script>
     import ToDo from '$lib/components/ToDo.svelte';
     import Carousel from '$lib/components/Carousel.svelte';
-    import { toastStore } from '@skeletonlabs/skeleton';
+    import { getToastStore } from '@skeletonlabs/skeleton';
+    const toastStore = getToastStore();
     export let data;
     const { userData, sb, announcements } = data;
     $: todos = data.todos

@@ -1,10 +1,11 @@
 <script>
     import { enhance, applyAction } from '$app/forms';
     import { invalidateAll } from '$app/navigation'
-    import { toastStore } from "@skeletonlabs/skeleton";
+    import { getToastStore } from "@skeletonlabs/skeleton";
     import ChatBubble from '../svgs/ChatBubble.svelte';
     import { slide } from 'svelte/transition';
     import Comment from './Comment.svelte';
+    const toastStore = getToastStore();
     export let journal;
     export let user;
 

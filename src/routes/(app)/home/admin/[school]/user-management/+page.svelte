@@ -3,9 +3,10 @@
     import CreateUser from '$lib/forms/admin/user-mgmt/CreateUser.svelte';
     import BulkUserCreate from "$lib/forms/admin/user-mgmt/BulkUserCreate.svelte";
     import ManageUsers from "$lib/forms/admin/user-mgmt/ManageUsers.svelte"
-    import { toastStore } from "@skeletonlabs/skeleton";
+    import { getToastStore } from "@skeletonlabs/skeleton";
     import { invalidateAll } from "$app/navigation"
     let tabSet = 0;
+    const toastStore = getToastStore();
     export let data
 
     const { school, sb } = data;

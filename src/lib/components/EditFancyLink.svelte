@@ -1,12 +1,12 @@
 <script>
-    import { Avatar, popup, modalStore } from "@skeletonlabs/skeleton"
+    import { Avatar, popup, getModalStore } from "@skeletonlabs/skeleton"
     import { createEventDispatcher } from "svelte";
     import Ellipsis from "../svgs/Ellipsis.svelte";
     import HiddenEye from "../svgs/HiddenEye.svelte";
     import Trash from "../svgs/Trash.svelte";
     import EditCardSettings from "../forms/card-mgmt/EditCardSettings.svelte";
     export let link, icon, name, id, classroom, hidden, sort_order;
-
+    const modalStore = getModalStore();
     const dispatch = createEventDispatcher()
     const cardInitials = getInitials(name)
 
